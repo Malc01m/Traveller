@@ -8,11 +8,23 @@
 
 namespace GeometryGen {
 
+    /**
+     * @returns A random vertex within the given bounds
+    */
     std::array<float, 2> randVert(float minx, float miny, float maxx, float maxy);
-    std::vector<std::array<float, 2>> randVert(int number, float minx, float miny, float maxx, float maxy);
+
+    /**
+     * @returns The requested number of random vertices within the given bounds
+    */
+    std::vector<std::array<float, 2>> randVert(int number, float minx, float miny, 
+        float maxx, float maxy);
 
     // Returns a regular polygon with the specified number of vertices each at a distance 
     // equal to radius from the center
+    /**
+     * @returns a regular polygon with the specified number of vertices each at a distance 
+     * equal to radius from the center
+    */
     Polygon regularPoly(int verts, float radius);
 
     // Group generators

@@ -93,7 +93,18 @@ class GridGroup : public Group {
          */
         void setYSpacing(float ySpacing);
 
+        /**
+         * @brief Sets the angle of the x axis
+         * 
+         * @param xAxisAngle Angle counterclockwise from east in radians 
+        */
         void setXAxisAng(float xAxisAng);
+
+        /**
+         * @brief Sets the angle of the y axis
+         * 
+         * @param xAxisAngle Angle counterclockwise from east in radians 
+        */
         void setYAxisAng(float yAxisAng);
 
         /**
