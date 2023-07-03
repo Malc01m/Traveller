@@ -19,17 +19,23 @@ namespace GeometryGen {
     std::vector<std::array<float, 2>> randVert(int number, float minx, float miny, 
         float maxx, float maxy);
 
-    // Returns a regular polygon with the specified number of vertices each at a distance 
-    // equal to radius from the center
     /**
-     * @returns a regular polygon with the specified number of vertices each at a distance 
-     * equal to radius from the center
+     * @param verts Number of vertices
+     * @param radius Distance from the center to a vertex
+     * @returns A regular polygon
     */
     Polygon regularPoly(int verts, float radius);
 
-    // Group generators
+    /**
+     * @param coords Spherical coordinates of the tiling
+     * @todo impelment
+    */
     Group tile(std::vector<std::array<float, 2>> coords);
 
+    /**
+     * @return an irregular triangular tiling
+     * @todo finish
+    */
     Group triField(int iter, float avgDist, float distScatter, float angScatter);
 }
 

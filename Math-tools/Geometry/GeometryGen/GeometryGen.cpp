@@ -34,16 +34,10 @@ Polygon GeometryGen::regularPoly(int verts, float radius) {
     return c;
 }
 
-/**
- * @param coords sphrical coordinates of vertices
-*/
 Group GeometryGen::tile(std::vector<std::array<float, 2>> coords) {
     throw("GeometryGen::tile: Not implemented");
 }
 
-/**
- * @return a tree-like cluster of triangles
-*/
 Group GeometryGen::triField(int iter, float avgDist, float distScatter, float angScatter) {
     std::array<float, 2> center = {0, 0};
     Group triField("triField");

@@ -38,7 +38,8 @@ class GridGroup : public Group {
          * @param xAxisAng Angle between the new x axis and the screen's x axis
          * @param yAxisAng Angle between the new y axis and the screen's y axis
          */
-        GridGroup(std::string name, float xSpacing, float ySpacing, float xAxisAng, float yAxisAng);
+        GridGroup(std::string name, float xSpacing, float ySpacing, float xAxisAng, 
+            float yAxisAng);
 
         /**
          * @brief Fills the specified region with new Polygon references
@@ -124,8 +125,8 @@ class GridGroup : public Group {
         float ySpacing = 0.06;
         float xAxisAng = 0;
         float yAxisAng = M_PI / 2;
-        //Coords is a vector containing the index of an Polygon in ptrs 
-        //inherited from Group, and its grid x and y coordinates.
+        // Coords is a vector containing the index of a Polygon in ptrs 
+        // inherited from Group, and its grid x and y coordinates.
         std::vector<std::tuple<int, float, float>> coords;
 
 };

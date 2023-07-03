@@ -151,13 +151,20 @@ class Group {
         void scale(float factor);
 
         /**
-         * @brief Gets the lowest or highest value on axis in the group
+         * @brief Gets the smallest value on axis in the group
          * 
-         * @param tMaxfMin True if searching for a maximum, false if a minimum
-         * @param axis Axis to find an extreme value on
-         * @return The extreme value
+         * @param axis Axis to find the smallest value on
+         * @return The smallest value
          */
-        float getExtreme(bool tMaxfMin, int axis);
+        float getMin(int axis);
+
+        /**
+         * @brief Gets the largest value on axis in the group
+         * 
+         * @param axis Axis to find the largest value on
+         * @return The largest value
+         */
+        float getMax(int axis);
 
         /**
          * @brief Gets the central point of the contents of the group

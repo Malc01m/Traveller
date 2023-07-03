@@ -58,8 +58,8 @@ int main () {
     gg.fill(tile, 0, 0, 9, 9);
     gg.centerAt({0, 0});
 
-    //dg.addGroup(gg);
-    dg.addGroup(GeometryGen::triField(-1, 0.2, 0, 0));
+    dg.addGroup(gg);
+    //dg.addGroup(GeometryGen::triField(-1, 0.2, 0, 0));
 
     // Is failing
     dg.saveGroup();

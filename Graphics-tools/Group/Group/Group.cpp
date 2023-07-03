@@ -125,8 +125,8 @@ void Group::shift(float offset, int axis) {
 }
 
 void Group::centerAt(float offset, int axis) {
-    float max = getExtreme(true, axis);
-    float min = getExtreme(false, axis);
+    float max = getMax(axis);
+    float min = getMin(axis);
     float center = ((max - min) / 2.0) + min;
     for (unsigned int i = 0; i < polys.size(); i++) {
         polys.at(i)->shift(offset - center, axis);
@@ -146,8 +146,12 @@ void Group::scale(float factor) {
     }
 }
 
-float Group::getExtreme(bool tMaxfMin, int axis) {
-    return GeometryInfo::getExtreme(getVertices(), tMaxfMin, axis);
+float Group::getMin(int axis) {
+    return GeometryInfo::getMin(getVertices(), axis);
+}
+
+float Group::getMax(int axis) {
+    return GeometryInfo::getMax(getVertices(), axis);
 }
 
 std::array<float, 2> Group::getCenter() {

@@ -78,8 +78,12 @@ bool Polygon::shiftVertex(int ind, int axis, float offset) {
     return false;
 }
 
-float Polygon::getExtreme(bool tMaxfMin, int axis) {
-    return GeometryInfo::getExtreme(vertices, tMaxfMin, axis);
+float Polygon::getMax(int axis) {
+    return GeometryInfo::getMax(vertices, axis);
+}
+
+float Polygon::getMin(int axis) {
+    return GeometryInfo::getMin(vertices, axis);
 }
 
 std::array<float, 2> Polygon::getCenter() {

@@ -12,7 +12,21 @@ class Polygon {
     public:
 
         // Constructors
+
+        /**
+         * @brief Constructs a polyogn
+         * 
+         * @param name The name of the polygon
+        */
         Polygon(std::string name);
+
+        /**
+         * @brief Constructs a polyogn
+         * 
+         * @param name The name of the polygon
+         * @param vertices The vertices of the polygon
+         * @param color The color of the polygon in (r, g, b, a) format
+        */
         Polygon(std::string name, std::vector<std::array<float, 2>> vertices, std::array<float, 4> color);
         
         // Copy constructor
@@ -23,36 +37,79 @@ class Polygon {
 
         // Setters
 
-        // Sets the polygon's vertices to those in vector vs
+        /**
+         * @brief Sets the polygon's vertices
+         * 
+         * @param vertices Vertices to give the polygon
+        */
         void setVertices(std::vector<std::array<float, 2>> vertices);
 
-        // Sets the polygon's color to c, an array of floats in (r, g, b, t) format
+        /**
+         * @brief Sets the polygon's color 
+         * 
+         * @param color The new color of the polygon in (r, g, b, a) format
+        */
         void setColor(std::array<float, 4> color);
 
+        /**
+         * @brief Sets the polygon's name
+         * 
+         * @param name Name to give the polygon
+        */
         void setName(std::string name);
 
         // Getters
 
         /** 
-         * @brief Returns true if a vertex exists at the given index
+         * @brief Checks if there is a vertex at an index
+         * 
+         * @param ind The index in polygon's vertices to check for a vertex at
+         * @returns true if the vertex exists
         */
         bool isVertexAt(int ind);
 
-        // Returns the polygon's vertices as a vector of floats in (x, y), (x, y)... format
+        /**
+         * @brief Gets the polygon's vertices
+         * 
+         * @returns the polygon's vertices as a vector of floats in (x, y), (x, y)... format
+        */
         std::vector<std::array<float, 2>> getVertices();
 
+        /**
+         * @brief Gets a vertex from the polygon's vertices
+         * 
+         * @param ind The index of the vertex to get
+         * @returns The vertex at the given index in vertices
+        */
         std::array<float, 2> getVertexAt(int ind);
 
-        // Returns polygon's color as an array of floats in (r, g, b, t) format
+        /** 
+         * @returns Returns polygon's color as an array of floats in (r, g, b, t) format
+        */
         std::array<float, 4> getColor();    
 
         // Manipulators
 
-        // Adds a vertex (x, y) to the end of vertices
+        /**
+         * @brief Adds a vertex to the polygon
+         * 
+         * @param x The x coordinate of the new vertex
+         * @param y The y coordinate of the new vertex
+        */
         void addVertex(float x, float y);
+
+        /**
+         * @brief Adds a vertex to the polygon
+         * 
+         * @param vert The x, y coordinates of the new vertex
+        */
         void addVertex(std::array<float, 2> vert);
 
-        // Removes the vertex at the given index
+        /**
+         * @brief Removes a vertex
+         * 
+         * @param ind The index of the vertex to remove from vertices
+        */
         bool removeVertex(int ind);
 
         /**
@@ -87,7 +144,11 @@ class Polygon {
 
         //Transforms
 
-        float getExtreme(bool tMaxfMin, int axis);
+        /**
+         * @brief 
+        */
+        float getMin(int axis);
+        float getMax(int axis);
         std::array<float, 2> getCenter();
         void rotate(std::array<float, 2> pivot, float angle);
         void shift(float offset, int axis);

@@ -18,14 +18,22 @@ namespace GeometryInfo {
     float getDist(std::array<float, 2> point1, std::array<float, 2> point2);
 
     /**
-     * @brief Gets the largest or smallest value on one axis in a set of vertices
+     * @brief Gets the smallest value on one axis in a set of vertices
      * 
      * @param verts The vertices to search through
-     * @param tMaxfMin True if looking for a maximum, false if looking for a minimum.
      * @param axis The axis to search on. 0 is x, 1 is y.
-     * @return the largest or smallest value on the given axis in verts
+     * @return the smallest value on the given axis in verts
      */
-    float getExtreme(std::vector<std::array<float, 2>> verts, bool tMaxfMin, int axis);
+    float getMin(std::vector<std::array<float, 2>> verts, int axis);
+
+    /**
+     * @brief Gets the largest value on one axis in a set of vertices
+     * 
+     * @param verts The vertices to search through
+     * @param axis The axis to search on. 0 is x, 1 is y.
+     * @return the largest value on the given axis in verts
+     */
+    float getMax(std::vector<std::array<float, 2>> verts, int axis);
 
     /**
      * @return the angle between point1 and point2 with respect to pivot

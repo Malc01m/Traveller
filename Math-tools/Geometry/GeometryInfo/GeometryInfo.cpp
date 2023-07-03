@@ -6,7 +6,8 @@ float GeometryInfo::getDist(std::array<float, 2> point1, std::array<float, 2> po
     return sqrt(pow((point2.at(1) - point1.at(1)), 2) + pow((point2.at(0) - point1.at(0)), 2));
 }
 
-float GeometryInfo::getExtreme(std::vector<std::array<float, 2>> verts, bool tMaxfMin, int axis) {
+// Helper for getMax, getMin
+float getExtreme(std::vector<std::array<float, 2>> verts, bool tMaxfMin, int axis) {
     if (static_cast<int>(verts.size()) > 0) {
         float extr = verts.at(0).at(axis);
         if (static_cast<int>(verts.size()) > 1) {
@@ -28,6 +29,14 @@ float GeometryInfo::getExtreme(std::vector<std::array<float, 2>> verts, bool tMa
     return 0;
 }
 
+float GeometryInfo::getMax(std::vector<std::array<float, 2>> verts, int axis) {
+    return getExtreme(verts, true, axis);
+}
+
+float GeometryInfo::getMin(std::vector<std::array<float, 2>> verts, int axis) {
+    return getExtreme(verts, false, axis);
+}
+
 float GeometryInfo::getCenter(std::vector<std::array<float, 2>> verts, int axis) {
     float center;
     float min = getExtreme(verts, false, axis);
@@ -44,35 +53,35 @@ std::array<float, 2> GeometryInfo::getCenter(std::vector<std::array<float, 2>> v
 }
 
 std::array<float, 2> GeometryInfo::getTopLeft(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, false, 0), getExtreme(verts, true, 1)};
+    return {getMin(verts, 0), getMax(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getTopRight(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, true, 0), getExtreme(verts, true, 1)};
+    return {getMax(verts, 0), getMax(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getBottomLeft(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, false, 0), getExtreme(verts, false, 1)};
+    return {getMin(verts, 0), getMin(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getBottomRight(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, false, 0), getExtreme(verts, true, 1)};
+    return {getMin(verts, 0), getMax(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getLeftCenter(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, false, 0), getCenter(verts, 1)};
+    return {getMin(verts, 0), getCenter(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getRightCenter(std::vector<std::array<float, 2>> verts) {
-    return {getExtreme(verts, true, 0), getCenter(verts, 1)};
+    return {getMax(verts, 0), getCenter(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getTopCenter(std::vector<std::array<float, 2>> verts) {
-    return {getCenter(verts, 0), getExtreme(verts, true, 1)};
+    return {getCenter(verts, 0), getMax(verts, 1)};
 }
 
 std::array<float, 2> GeometryInfo::getBottomCenter(std::vector<std::array<float, 2>> verts) {
-    return {getCenter(verts, 0), getExtreme(verts, false, 1)};
+    return {getCenter(verts, 0), getMin(verts, 1)};
 }
 
 float GeometryInfo::getAngle(std::array<float, 2> point1, std::array<float, 2> point2, std::array<float, 2> pivot) {
