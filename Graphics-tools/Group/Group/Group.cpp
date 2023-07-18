@@ -199,7 +199,6 @@ void Group::scatterColorLightness(float maxChange) {
     }
 }
 
-
 std::vector<std::string> Group::getStatus() {
     std::vector<std::string> groupStatus;
     groupStatus.push_back("[Group] " + name + ":");
@@ -210,6 +209,13 @@ std::vector<std::string> Group::getStatus() {
         }
     }
     return groupStatus;
+}
+
+void Group::printStatus() {
+    std::vector<std::string> groupStat = getStatus();
+    for (unsigned int i = 0; i < groupStat.size(); i++) {
+        std::cout << groupStat.at(i) << '\n';
+    }
 }
 
 bool Group::saveGroup() {

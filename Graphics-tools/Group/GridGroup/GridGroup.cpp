@@ -1,5 +1,5 @@
 #include "GridGroup.h"
-#include "../../../Math-tools/Geometry/GeometryInfo/GeometryInfo.h"
+#include "GeometryInfo.h"
 
 GridGroup::GridGroup() : Group("Grid") {}
 

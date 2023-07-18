@@ -1,6 +1,9 @@
+#ifndef GRIDGROUP_H
+#define GRIDGROUP_H
+
 #include <tuple>
 
-#include "../Group/Group.h"
+#include "Group.h"
 
 class GridGroup : public Group {
 
@@ -130,3 +133,5 @@ class GridGroup : public Group {
         std::vector<std::tuple<int, float, float>> coords;
 
 };
+
+#endif

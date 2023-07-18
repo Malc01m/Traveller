@@ -1,6 +1,9 @@
+#ifndef UIGROUP_H
+#define UIGROUP_H
+
 #include <functional>
 
-#include "../Group/Group.h"
+#include "Group.h"
 
 class UIGroup : public Group {
     public: 
@@ -51,3 +54,5 @@ class UIGroup : public Group {
         //when they are clicked
         std::vector<std::tuple<int, std::function<void()>>> clickable;
 };
+
+#endif

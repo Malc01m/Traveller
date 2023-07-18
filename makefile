@@ -5,6 +5,7 @@ INCLUDEPATHS = \
 	-I ./Graphics-tools/Group/DrawGroup \
 	-I ./Graphics-tools/Group/Group \
 	-I ./Graphics-tools/Group/GridGroup \
+	-I ./Graphics-tools/Group/EditGroup \
 	-I ./Math-tools \
 	-I ./Math-tools/Rand \
 	-I ./Math-tools/Geometry/GeometryGen \
@@ -26,7 +27,7 @@ compile: main.cpp $(OBJ_DEST)
 .PHONY: all
 
 #Build dir
-all: | ./build
+all: ./build
 
 ./build:
 	mkdir -p ./build
@@ -50,7 +51,7 @@ DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp
 	g++ -c $(FLAGS) $(DrawGroup) -o ./build/DrawGroup.o
 
 EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp
-./build/EditGroup.o: $(EditGroup) ./build/Group.o
+./build/EditGroup.o: $(EditGroup) ./build/EditGroup.o
 	g++ -c $(FLAGS) $(EditGroup) -o ./build/EditGroup.o
 
 GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp

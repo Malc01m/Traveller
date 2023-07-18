@@ -16,6 +16,7 @@
 #include "Group.h"
 #include "DrawGroup.h"
 #include "GridGroup.h"
+#include "EditGroup.h"
 #include "Polygon.h"
 
 #include "GeometryGen.h"
@@ -49,17 +50,23 @@ int main () {
     int transparency = gsetup.getTransparency();
 
     DrawGroup dg("Draw Group", whratio, window, ctx, color, transparency);
+    std::shared_ptr<DrawGroup> dgptr = std::make_shared<DrawGroup>(dg);
 
-    GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
+    //GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
+
+    EditGroup eg("EditGroup", dgptr);
     
-    Polygon tile = GeometryGen::regularPoly(4, 0.027);
-    tile.scale(tile.getCenter(), 2.1, 0);
+    //Polygon tile = GeometryGen::regularPoly(4, 0.027);
+    //tile.scale(tile.getCenter(), 2.1, 0);
 
-    gg.fill(tile, 0, 0, 9, 9);
-    gg.centerAt({0, 0});
+    //gg.fill(tile, 0, 0, 9, 9);
+    //gg.centerAt({0, 0});
 
-    dg.addGroup(gg);
-    //dg.addGroup(GeometryGen::triField(-1, 0.2, 0, 0));
+    //dg.addGroup(gg);
+    //eg.addGroup(gg);
+    Group triField = GeometryGen::triField(-1, 0.2, 0, 0);
+    dg.addGroup(triField);
+    eg.addGroup(triField);
 
     // Is failing
     dg.saveGroup();
@@ -67,6 +74,9 @@ int main () {
     dg.clear();
     dg.draw();
 
+    eg.initEditor();
+
+    /*
     SDL_Event event;
     while (true) {
         bool redraw = false;
@@ -101,11 +111,8 @@ int main () {
         if (redraw) {
             dg.clear();
             dg.draw();
-
-            std::vector<std::string> groupStat = dg.getStatus();
-            for (unsigned int i = 0; i < groupStat.size(); i++) {
-                std::cout << groupStat.at(i) << '\n';
-            }
+            dg.printStatus();
         }
     }
+    */
 }

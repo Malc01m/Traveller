@@ -1,11 +1,12 @@
-#pragma once
+#ifndef EDITGROUP_H
+#define EDITGROUP_H
 
 #include <vector>
 #include <array>
 
-#include "../../../Math-tools/Geometry/GeometryGen/GeometryGen.h"
-#include "../Group/Group.h"
-#include "../DrawGroup/DrawGroup.h"
+#include "GeometryGen.h"
+#include "Group.h"
+#include "DrawGroup.h"
 
 class EditGroup : public Group {
 
@@ -38,7 +39,10 @@ class EditGroup : public Group {
         bool hoverPrevPoly();
 
         /**
-         * @brief Creates a new Polygon
+         * @brief Creates a new regular polygon
+         * 
+         * @param verts Number of vertices
+         * @param radius Distance from center to a vertex
          */
         void newRegPoly(int verts, float radius);
 
@@ -52,22 +56,23 @@ class EditGroup : public Group {
         bool hoverVertex();
 
         /**
-         * @brief Hovers over a vertex by index
+         * @brief Hovers the cursor over a vertex
          * 
-         * @param ind The index of the vertex to be selected
+         * @param polyInd The index of the polygon for a vertex to be selected from
+         * @param vertInd The index of the vertex to be selected
          * @return false if the index is invalid
         */
         bool hoverVertex(int polyInd, int vertInd);
 
         /**
-         * @brief Selects the next vertex
+         * @brief Hovers the cursor over the next vertex
          * 
          * @return false if the last vertex is already selected
         */
         bool hoverNextVertex();
 
         /**
-         * @brief Selects the previous vertex
+         * @brief Hovers the cursor over the previous vertex
          * 
          * @return false if the first vertex is already selected
         */
@@ -108,3 +113,5 @@ class EditGroup : public Group {
         std::shared_ptr<DrawGroup> drawGroupPtr;
 
 };
+
+#endif

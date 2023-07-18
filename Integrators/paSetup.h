@@ -1,13 +1,20 @@
+#ifndef PASETUP_H
+#define PASETUP_H
+
 #include <vector>
 #include <string>
 #include <tuple>
 
 class paSetup {
+
     public:
-        //Constructor
+
+        //Constructors
+
         paSetup(std::vector<std::tuple<std::string, int, int, int>> devices);
 
         //Setters
+
         void setInDeviceNum(int num);
         void setOutDeviceNum(int num);
         void setInChannels(int ch);
@@ -16,6 +23,7 @@ class paSetup {
         void setFileValGood(int ind, bool isGood);
 
         //Getters
+
         int getInDeviceNum();
         int getOutDeviceNum();
         int getInChannels();
@@ -24,6 +32,7 @@ class paSetup {
         bool getFileValOK(int ind);
 
         //Validators
+
         bool deviceIsGood(int num);
         bool inDeviceIsGood(int num);
         bool outDeviceIsGood(int num);
@@ -33,6 +42,7 @@ class paSetup {
         bool fileValsAllGood();
 
         //Prompts
+
         void textPromptInDeviceNum();
         void textPromptOutDeviceNum();
         void textPromptInChannels();
@@ -45,6 +55,7 @@ class paSetup {
         void printValues();
 
         //File
+        
         int generateFile();
         int readValsFromFile();
 
@@ -64,3 +75,5 @@ class paSetup {
         int sampleRate;
 
 };
+
+#endif

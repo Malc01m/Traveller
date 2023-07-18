@@ -1,6 +1,7 @@
-#include "../Graphics-tools/Shader/Shader.h"
 #include <GL/glew.h>
 #include <cstdio>
+
+#include "Shader.h"
 
 class glewSetup {
     public:

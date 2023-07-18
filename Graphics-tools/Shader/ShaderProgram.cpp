@@ -2,13 +2,9 @@
 
 #include "ShaderProgram.h"
 
-//Constructors
-
 ShaderProgram::ShaderProgram() {
     shaders = std::vector<Shader>();
 };
-
-//Member functions
 
 void ShaderProgram::add(Shader s) {
     ShaderProgram::shaders.push_back(s);
@@ -28,8 +24,6 @@ GLuint ShaderProgram::compile() {
     glUseProgram(compiledShaderProgram);
     return compiledShaderProgram;
 };
-
-//Getters
 
 GLuint ShaderProgram::getCompiledShaderProgram() {
     return compiledShaderProgram;

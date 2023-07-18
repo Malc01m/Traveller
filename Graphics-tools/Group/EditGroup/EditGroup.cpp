@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "EditGroup.h"
-#include "../../../Math-tools/Geometry/GeometryInfo/GeometryInfo.h"
+#include "GeometryInfo.h"
 
 EditGroup::EditGroup(std::string name, std::shared_ptr<DrawGroup> drawGroupPtr) : Group(name) {
     EditGroup::drawGroupPtr = drawGroupPtr;
@@ -83,18 +83,16 @@ void EditGroup::initEditor() {
 
     const Uint8* keyStates = SDL_GetKeyboardState(NULL);
     SDL_Event event;
-    bool redraw;
-
-    newRegPoly(4, 0.02);
+    bool redrawFlag;
 
     if (polys.size() > 0) {
         hoverVertex(0, 0);
     }
-    EditGroup::redraw();
+    redraw();
 
     while (true) {
 
-        redraw = false;
+        redrawFlag = false;
 
         //Quit program
         while(SDL_PollEvent(&event)) {
@@ -107,30 +105,30 @@ void EditGroup::initEditor() {
                 if(!freeMoveMode) {
                     if (event.key.keysym.sym == SDLK_a) {
                         shiftHoveredVertex(0, -0.01);
-                        redraw = true;
+                        redrawFlag = true;
                     }
                     if (event.key.keysym.sym == SDLK_s) {
                         shiftHoveredVertex(1, -0.01);
-                        redraw = true;
+                        redrawFlag = true;
                     }
                     if (event.key.keysym.sym == SDLK_d) {
                         shiftHoveredVertex(0, 0.01);
-                        redraw = true;
+                        redrawFlag = true;
                     }
                     if (event.key.keysym.sym == SDLK_w) {
                         shiftHoveredVertex(1, 0.01);
-                        redraw = true;
+                        redrawFlag = true;
                     }
                 }
 
                 //Cycle
                 if (event.key.keysym.sym == SDLK_q) {
                     hoverNextVertex();
-                    redraw = true;
+                    redrawFlag = true;
                 }
                 if (event.key.keysym.sym == SDLK_e) {
                     hoverPrevVertex();
-                    redraw = true;
+                    redrawFlag = true;
                 }
 
                 //Mode toggles
@@ -141,22 +139,23 @@ void EditGroup::initEditor() {
             }
         }
 
+        // Tests against states rather than events. Moves more continuously.
         if (freeMoveMode) {
             if (keyStates[SDL_SCANCODE_A]) {
                 shiftHoveredVertex(0, -0.01);
-                redraw = true;
+                redrawFlag = true;
             }
             if (keyStates[SDL_SCANCODE_S]) {
                 shiftHoveredVertex(1, -0.01);
-                redraw = true;
+                redrawFlag = true;
             }
             if (keyStates[SDL_SCANCODE_D]) {
                 shiftHoveredVertex(0, 0.01);
-                redraw = true;
+                redrawFlag = true;
             }
             if (keyStates[SDL_SCANCODE_W]) {
                 shiftHoveredVertex(1, 0.01);
-                redraw = true;
+                redrawFlag = true;
             }
         }
 
@@ -165,8 +164,9 @@ void EditGroup::initEditor() {
             break;
         }
 
-        if (redraw) {
-            EditGroup::redraw();
+        if (redrawFlag) {
+            redraw();
+            printStatus();
         }
     }
 }

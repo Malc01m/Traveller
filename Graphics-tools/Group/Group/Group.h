@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GROUP_H
+#define GROUP_H
 
 #include <vector>
 #include <memory>
@@ -229,6 +230,11 @@ class Group {
         std::vector<std::string> getStatus();
 
         /**
+         * @brief Prints the group's status report to console
+        */
+        void printStatus();
+
+        /**
          * @brief Saves getStatus() to a file in a generated saves subdirectory
          * 
          * @returns true on successful write
@@ -256,3 +262,5 @@ class Group {
         std::string strVectToNewlines(std::vector<std::string> vect);
 
 };
+
+#endif

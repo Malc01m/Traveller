@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHADERPROGRAM_H
+#define SHADERPROGRAM_H
 
 #include <vector>
 #include <GL/glew.h>
@@ -10,19 +11,28 @@ class ShaderProgram {
 
         //Constructors
 
-        //Constructs a shader program object
+        /**
+         * @brief Constructs a shader program object
+        */
         ShaderProgram();
 
         //Member functions
 
-        //Adds a shader to the shaders vector
+        /**
+         * @brief Adds a shader to the shaders vector
+        */
         void add(Shader s);
-        //Compiles the shaders in the shaders vector as a shader program
+
+        /**
+         * @brief Compiles the shaders in the shaders vector as a shader program
+        */
         GLuint compile();
 
         //Getters
 
-        //Returns the last compiled shader program
+        /**
+         * @brief Returns the last compiled shader program
+        */
         GLuint getCompiledShaderProgram();
 
     private:
@@ -33,3 +43,5 @@ class ShaderProgram {
         std::vector<Shader> shaders;
 
 };
+
+#endif

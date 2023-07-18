@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHADER_H
+#define SHADER_H
+
 #include <GL/glew.h>
 
 class Shader {
@@ -6,21 +8,33 @@ class Shader {
 
         //Constructors
 
-        //Constructs a shader with source s and type t
+        /**
+         * @brief Constructs a shader with source s and type t
+        */
         Shader(const char* s, int t);
 
         //Member functions
 
-        //Compiles the shader
+        /**
+         * @brief Compiles the shader
+        */
         void compile();
 
         //Getters
 
-        //Returns the last compiled shader
+        /**
+         * @returns The last compiled shader
+        */
         GLuint getCompiledShader();
-        //Returns the shader's source code
+
+        /**
+         * @returns the shader's source code
+        */
         const char* getSource();
-        //Returns the shader's type
+
+        /**
+         * @returns the shader's type
+        */
         int getType();
 
     private:
@@ -33,3 +47,5 @@ class Shader {
         GLuint compiledShader;
 
 };
+
+#endif
