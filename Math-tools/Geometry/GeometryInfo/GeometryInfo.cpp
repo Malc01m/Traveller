@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "GeometryInfo.h"
+#include "Rand.h"
 
 float GeometryInfo::getDist(std::array<float, 2> point1, std::array<float, 2> point2) {
     return sqrt(pow((point2.at(1) - point1.at(1)), 2) + pow((point2.at(0) - point1.at(0)), 2));
@@ -148,7 +149,7 @@ std::vector<std::array<float, 2>> GeometryInfo::shift(std::vector<std::array<flo
 }
 
 std::array<float, 2> GeometryInfo::shift(std::array<float, 2> point, float offset, float angle) {
-    point = rotate({offset + point.at(0), 0}, point, angle);
+    point = rotate({offset + point.at(0), point.at(1)}, point, angle);
     return point;
 }
 
@@ -179,4 +180,30 @@ std::vector<std::array<float, 2>> GeometryInfo::scale(std::vector<std::array<flo
         verts.at(i) = GeometryInfo::scale(verts.at(i), center, factor, axis);
     }
     return verts;
+}
+
+std::vector<std::array<float, 2>> GeometryInfo::radial(int numArms, float dist, float distScatter, float angScatter) {
+    std::array<float, 2> center = {0, 0};
+
+    float angDiff = (2 * M_PI) / numArms;
+
+    float minAng = angDiff - angScatter;
+    float maxAng = angDiff + angScatter;
+    float maxDist = dist + distScatter;
+    float minDist = dist - distScatter;
+
+    float thisAng = Rand::randFloatBetween(0, 2 * M_PI);
+    float thisDist = Rand::randFloatBetween(minDist, maxDist);
+
+    std::array<float, 2> arm = GeometryInfo::shift(center, thisDist, thisAng);
+    std::vector<std::array<float, 2>> armVect = {arm};
+
+    for (int i = 1; i < numArms; i++) {
+        thisAng = thisAng + Rand::randFloatBetween(minAng, maxAng);
+        float thisDist = Rand::randFloatBetween(minDist, maxDist);
+        std::array<float, 2> arm = GeometryInfo::shift(center, thisDist, thisAng);
+        armVect.push_back(arm);
+    }
+
+    return armVect;
 }

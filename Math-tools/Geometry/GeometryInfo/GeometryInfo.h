@@ -98,6 +98,13 @@ namespace GeometryInfo {
     //Scales all verticess around center on axis by factor
     std::vector<std::array<float, 2>> scale(std::vector<std::array<float, 2>> verts, std::array<float, 2> center, float factor, int axis);
 
+    // Formations
+    /**
+     * @brief Creates a formation of points around a center
+     * @returns a vector of point arrays 
+    */
+    std::vector<std::array<float, 2>> radial(int numArms, float dist, float distScatter, float angScatter);
+
 }
 
 #endif

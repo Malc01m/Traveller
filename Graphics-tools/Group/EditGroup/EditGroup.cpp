@@ -121,7 +121,7 @@ void EditGroup::initEditor() {
                     }
                 }
 
-                //Cycle
+                //Cycle vertices
                 if (event.key.keysym.sym == SDLK_q) {
                     hoverNextVertex();
                     redrawFlag = true;
@@ -131,8 +131,18 @@ void EditGroup::initEditor() {
                     redrawFlag = true;
                 }
 
-                //Mode toggles
+                //Cycle polygons
                 if (event.key.keysym.sym == SDLK_r) {
+                    hoverNextPoly();
+                    redrawFlag = true;
+                }
+                if (event.key.keysym.sym == SDLK_f) {
+                    hoverPrevPoly();
+                    redrawFlag = true;
+                }
+
+                //Mode toggles
+                if (event.key.keysym.sym == SDLK_z) {
                     freeMoveMode = !freeMoveMode;
                 }
 

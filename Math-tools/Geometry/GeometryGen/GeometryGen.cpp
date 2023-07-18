@@ -1,4 +1,5 @@
 #include <math.h>
+#include <iostream>
 
 #include "GeometryInfo.h"
 #include "GeometryGen.h"
@@ -42,35 +43,20 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter, float an
     std::array<float, 2> center = {0, 0};
     Group triField("triField");
     int numVerts = Rand::randIntBetween(3, 5);
-    float angDiff = (2 * M_PI) / numVerts;
-    float minAng = angDiff - angScatter;
-    float maxAng = angDiff + angScatter;
-    float maxDist = avgDist + distScatter;
-    float minDist = avgDist - distScatter;
-
-    // Choose a random angle to start
-    float thisAng = Rand::randFloatBetween(0, 2 * M_PI);
-    float dist = Rand::randFloatBetween(minDist, maxDist);
-    std::array<float, 2> arm = GeometryInfo::shift(center, dist, thisAng);
-    std::vector<std::array<float, 2>> armVect = {arm};
+    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, avgDist, distScatter, angScatter);
 
     for (int i = 1; i < numVerts; i++) {
-        float thisAng = thisAng + Rand::randFloatBetween(minAng, maxAng);
-        float dist = Rand::randFloatBetween(minDist, maxDist);
-        std::array<float, 2> arm = GeometryInfo::shift(center, dist, thisAng);
         Polygon centTri = Polygon("triField central triangle " + std::to_string(i));
         centTri.addVertex(center);
-        centTri.addVertex(arm);
-        centTri.addVertex(armVect.at(armVect.size() - 1));
+        centTri.addVertex(armVect.at(i - 1));
+        centTri.addVertex(armVect.at(i));
         triField.addPolygon(centTri);
-
-        armVect.push_back(arm);
     }
 
     Polygon centTri = Polygon("triField closing central triangle");
     centTri.addVertex(center);
     centTri.addVertex(armVect.at(armVect.size() - 1));
-    centTri.addVertex(armVect.at(1));
+    centTri.addVertex(armVect.at(0));
     triField.addPolygon(centTri);
 
     return triField;

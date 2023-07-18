@@ -51,7 +51,7 @@ DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp
 	g++ -c $(FLAGS) $(DrawGroup) -o ./build/DrawGroup.o
 
 EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp
-./build/EditGroup.o: $(EditGroup) ./build/EditGroup.o
+./build/EditGroup.o: $(EditGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(EditGroup) -o ./build/EditGroup.o
 
 GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp
@@ -77,7 +77,7 @@ GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp
 	g++ -c $(FLAGS) $(GeometryGen) -o ./build/GeometryGen.o
 
 GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp
-./build/GeometryInfo.o: $(GeometryInfo)
+./build/GeometryInfo.o: $(GeometryInfo) ./build/Rand.o
 	g++ -c $(FLAGS) $(GeometryInfo) -o ./build/GeometryInfo.o
 
 Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp

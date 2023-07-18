@@ -52,21 +52,30 @@ int main () {
     DrawGroup dg("Draw Group", whratio, window, ctx, color, transparency);
     std::shared_ptr<DrawGroup> dgptr = std::make_shared<DrawGroup>(dg);
 
-    //GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
-
     EditGroup eg("EditGroup", dgptr);
     
-    //Polygon tile = GeometryGen::regularPoly(4, 0.027);
-    //tile.scale(tile.getCenter(), 2.1, 0);
+    std::string test = "trifield";
+    if (test == "grid") {
 
-    //gg.fill(tile, 0, 0, 9, 9);
-    //gg.centerAt({0, 0});
+        GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
 
-    //dg.addGroup(gg);
-    //eg.addGroup(gg);
-    Group triField = GeometryGen::triField(-1, 0.2, 0, 0);
-    dg.addGroup(triField);
-    eg.addGroup(triField);
+        Polygon tile = GeometryGen::regularPoly(4, 0.027);
+        tile.scale(tile.getCenter(), 2.1, 0);
+
+        gg.fill(tile, 0, 0, 9, 9);
+        gg.centerAt({0, 0});
+
+        dg.addGroup(gg);
+        eg.addGroup(gg);
+
+    } else if (test == "trifield") {
+
+        Group triField = GeometryGen::triField(-1, 0.2, 0, 0);
+        
+        dg.addGroup(triField);
+        eg.addGroup(triField);
+
+    }
 
     // Is failing
     dg.saveGroup();
