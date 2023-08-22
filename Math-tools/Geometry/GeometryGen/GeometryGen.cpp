@@ -35,10 +35,10 @@ Polygon GeometryGen::regularPoly(int verts, float radius) {
     return c;
 }
 
-Group GeometryGen::wheel(int numVerts, float radius, float distScatter, float angScatter) {
+Group GeometryGen::wheel(int numVerts, float radius, float radScatter, float angScatter) {
     std::array<float, 2> center = {0, 0};
     Group wheel("wheel");
-    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, radius, distScatter, angScatter);
+    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, radius, radScatter, angScatter);
 
     for (int i = 1; i < numVerts; i++) {
         Polygon centTri = Polygon("wheel triangle " + std::to_string(i));

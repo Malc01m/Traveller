@@ -32,7 +32,17 @@ namespace GeometryGen {
     */
     Group tile(std::vector<std::array<float, 2>> coords);
 
-    Group wheel(int numVerts, float radius, float distScatter, float angScatter);
+    /**
+     * @brief Generates a group of triangles, each with a vertex at center,
+     * that, when no scatter is applied, sums to a regular polygon.
+     * 
+     * @param numVerts Number of vertices in the composite regular polygon
+     * @param radius Distance from center to outer vertices
+     * @param radScatter Randomize the radius within this tolerance
+     * @param angScatter Randomize the angle between outer vertices from 
+     * center within this tolerance
+    */
+    Group wheel(int numVerts, float radius, float radScatter, float angScatter);
 
     /**
      * @return an irregular triangular tiling
