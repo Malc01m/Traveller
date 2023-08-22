@@ -182,7 +182,7 @@ std::vector<std::array<float, 2>> GeometryInfo::scale(std::vector<std::array<flo
     return verts;
 }
 
-std::vector<std::array<float, 2>> GeometryInfo::radial(int numArms, float dist, float distScatter, float angScatter) {
+std::vector<std::array<float, 2>> GeometryInfo::radial(int numArms, float dist, float ang, float distScatter, float angScatter) {
     std::array<float, 2> center = {0, 0};
 
     float angDiff = (2 * M_PI) / numArms;
@@ -192,7 +192,7 @@ std::vector<std::array<float, 2>> GeometryInfo::radial(int numArms, float dist, 
     float maxDist = dist + distScatter;
     float minDist = dist - distScatter;
 
-    float thisAng = Rand::randFloatBetween(0, 2 * M_PI);
+    float thisAng = ang;
     float thisDist = Rand::randFloatBetween(minDist, maxDist);
 
     std::array<float, 2> arm = GeometryInfo::shift(center, thisDist, thisAng);

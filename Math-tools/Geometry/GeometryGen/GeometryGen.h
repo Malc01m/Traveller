@@ -38,11 +38,12 @@ namespace GeometryGen {
      * 
      * @param numVerts Number of vertices in the composite regular polygon
      * @param radius Distance from center to outer vertices
+     * @param ang Angle of first arm. Passed to radial.
      * @param radScatter Randomize the radius within this tolerance
      * @param angScatter Randomize the angle between outer vertices from 
      * center within this tolerance
     */
-    Group wheel(int numVerts, float radius, float radScatter, float angScatter);
+    Group wheel(int numVerts, float radius, float ang, float radScatter, float angScatter);
 
     /**
      * @return an irregular triangular tiling

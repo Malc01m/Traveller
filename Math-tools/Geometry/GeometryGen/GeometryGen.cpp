@@ -35,10 +35,11 @@ Polygon GeometryGen::regularPoly(int verts, float radius) {
     return c;
 }
 
-Group GeometryGen::wheel(int numVerts, float radius, float radScatter, float angScatter) {
+Group GeometryGen::wheel(int numVerts, float radius, float ang, float radScatter, float angScatter) {
     std::array<float, 2> center = {0, 0};
     Group wheel("wheel");
-    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, radius, radScatter, angScatter);
+    std::vector<std::array<float, 2>> armVect = 
+        GeometryInfo::radial(numVerts, radius, ang, radScatter, angScatter);
 
     for (int i = 1; i < numVerts; i++) {
         Polygon centTri = Polygon("wheel triangle " + std::to_string(i));
@@ -61,10 +62,13 @@ Group GeometryGen::tile(std::vector<std::array<float, 2>> coords) {
     throw("GeometryGen::tile: Not implemented");
 }
 
-Group GeometryGen::triField(int iter, float avgDist, float distScatter, float angScatter) {
-    // Use a wheel as center tris
+Group GeometryGen::triField(int iter, float avgDist, float distScatter, 
+        float angScatter) {
+
+    // Use a wheel as center tris.
     int numVerts = Rand::randIntBetween(3, 5);
-    Group triField = wheel(numVerts, avgDist, distScatter, angScatter);
+    int ang = Rand::randFloatBetween(0, 2 * M_PI);
+    Group triField = wheel(numVerts, avgDist, ang, distScatter, angScatter);
     triField.setName("trifield");
 
     // Get initial outer verts
@@ -77,7 +81,7 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter, float an
         // Create new outer vertex ring
         int numVerts = Rand::randIntBetween(outerVerts.size(), (5 * i));
         std::vector<std::array<float, 2>> newOuter = 
-            GeometryInfo::radial(numVerts, (avgDist * i), 
+            GeometryInfo::radial(numVerts, (avgDist * i), ang,
             distScatter, angScatter);
         
         // Distribute new vertices evenly to old vertices
@@ -93,10 +97,30 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter, float an
             }
         }
 
-        for (int i = 0; i < outerVerts.size(); i++) {
+        // Connect old and new
+        int newInd = 0;
+        for (int j = 0; j < outerVerts.size(); j++) {
             int connect = assign.back();
             assign.pop_back();
+
+            for (int k = 0; k < connect; k++) {
+                Polygon tri = Polygon("trifield iter " + std::to_string(i) + 
+                    ", connect part " + std::to_string(k) +
+                    ", outer ring part " + std::to_string(newInd));
+                tri.addVertex(outerVerts.at(j));
+                if (newOuter.size() < newInd + 1) {
+                    tri.addVertex(newOuter.at(newInd));
+                    tri.addVertex(newOuter.at(newInd + 1));
+                } else {
+                    // Seems to produce flipped normal?
+                    tri.addVertex(newOuter.at(0));
+                    tri.addVertex(newOuter.at(newInd));
+                }
+                triField.addPolygon(tri);
+                newInd++;
+            }
         }
+
         outerVerts = newOuter;
     }
     return triField;

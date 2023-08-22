@@ -70,7 +70,7 @@ int main () {
 
     } else if (test == "trifield") {
 
-        Group triField = GeometryGen::triField(-1, 0.2, 0, 0);
+        Group triField = GeometryGen::triField(1, 0.2, 0, 0);
         
         dg.addGroup(triField);
         eg.addGroup(triField);

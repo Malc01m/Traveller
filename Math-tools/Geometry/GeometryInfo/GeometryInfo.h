@@ -61,49 +61,63 @@ namespace GeometryInfo {
     std::array<float, 2> getBottomCenter(std::vector<std::array<float, 2>> verts);
 
     //Returns the vector of points reordered by closeness
-    std::vector<std::array<float, 2>> sortByNear(std::vector<std::array<float, 2>> points);
+    std::vector<std::array<float, 2>> sortByNear(
+        std::vector<std::array<float, 2>> points);
 
     //Returns the vector of points zigzagged by closeness
-    std::vector<std::array<float, 2>> zagSort(std::vector<std::array<float, 2>> points);
+    std::vector<std::array<float, 2>> zagSort(
+        std::vector<std::array<float, 2>> points);
 
     //Transformations
 
     //Rotate
 
     //Rotates the point by angle in radians around the pivot
-    std::array<float, 2> rotate(std::array<float, 2> point, std::array<float, 2> pivot, float angle);
+    std::array<float, 2> rotate(std::array<float, 2> point, 
+        std::array<float, 2> pivot, float angle);
     //Rotates all points by angle in radians around the pivot
-    std::vector<std::array<float, 2>> rotate(std::vector<std::array<float, 2>> verts, std::array<float, 2> pivot, float angle);
+    std::vector<std::array<float, 2>> rotate(
+        std::vector<std::array<float, 2>> verts, std::array<float, 2> pivot, 
+        float angle);
 
     //Shift
 
     //Shifts the point on axis by offset
-    std::array<float, 2> shift(std::array<float, 2> point, float offset, int axis);
+    std::array<float, 2> shift(std::array<float, 2> point, float offset, 
+        int axis);
     //Shifts all vertices on axis by offset
-    std::vector<std::array<float, 2>> shift(std::vector<std::array<float, 2>> verts, float offset, int axis);
+    std::vector<std::array<float, 2>> shift(
+        std::vector<std::array<float, 2>> verts, float offset, int axis);
     //Shifts the point at angle by offset
-    std::array<float, 2> shift(std::array<float, 2> point, float offset, float angle);
+    std::array<float, 2> shift(std::array<float, 2> point, float offset, 
+        float angle);
     //Shifts all points at angle by offset
-    std::vector<std::array<float, 2>> shift(std::vector<std::array<float, 2>> verts, float offset, float angle);
+    std::vector<std::array<float, 2>> shift(
+        std::vector<std::array<float, 2>> verts, float offset, float angle);
 
     //Center at
 
     //Shifts all verticess on axis to be centered around cntr
-    std::vector<std::array<float, 2>> centerAt(std::vector<std::array<float, 2>> verts, float offset, int axis);
+    std::vector<std::array<float, 2>> centerAt(
+        std::vector<std::array<float, 2>> verts, float offset, int axis);
 
     //Scale
 
     //Scales the point around center on axis by factor
-    std::array<float, 2> scale(std::array<float, 2> point, std::array<float, 2> center, float factor, int axis);
+    std::array<float, 2> scale(std::array<float, 2> point, 
+        std::array<float, 2> center, float factor, int axis);
     //Scales all verticess around center on axis by factor
-    std::vector<std::array<float, 2>> scale(std::vector<std::array<float, 2>> verts, std::array<float, 2> center, float factor, int axis);
+    std::vector<std::array<float, 2>> scale(
+        std::vector<std::array<float, 2>> verts, std::array<float, 2> center, 
+        float factor, int axis);
 
     // Formations
     /**
      * @brief Creates a formation of points around a center
      * @returns a vector of point arrays 
     */
-    std::vector<std::array<float, 2>> radial(int numArms, float dist, float distScatter, float angScatter);
+    std::vector<std::array<float, 2>> radial(int numArms, float dist, float ang, 
+        float distScatter, float angScatter);
 
 }
 
