@@ -62,8 +62,42 @@ Group GeometryGen::tile(std::vector<std::array<float, 2>> coords) {
 }
 
 Group GeometryGen::triField(int iter, float avgDist, float distScatter, float angScatter) {
+    // Use a wheel as center tris
     int numVerts = Rand::randIntBetween(3, 5);
     Group triField = wheel(numVerts, avgDist, distScatter, angScatter);
     triField.setName("trifield");
+
+    // Get initial outer verts
+    std::vector<std::array<float, 2>> outerVerts;
+    for (int i = 0; i < triField.getNumPolygons(); i++) {
+        outerVerts.push_back(triField.getPolygon(i)->getVertexAt(1));
+    }
+
+    for (int i = 2; i < iter + 2; i++) {
+        // Create new outer vertex ring
+        int numVerts = Rand::randIntBetween(outerVerts.size(), (5 * i));
+        std::vector<std::array<float, 2>> newOuter = 
+            GeometryInfo::radial(numVerts, (avgDist * i), 
+            distScatter, angScatter);
+        
+        // Distribute new vertices evenly to old vertices
+        int vertRatio = newOuter.size() / outerVerts.size();
+        int stray = newOuter.size() % outerVerts.size();
+        std::vector<int> assign;
+        for (int i = 0; i < outerVerts.size(); i++) {
+            if (stray > 0) {
+                assign.push_back(vertRatio + 1);
+                stray = stray - 1;
+            } else {
+                assign.push_back(vertRatio);
+            }
+        }
+
+        for (int i = 0; i < outerVerts.size(); i++) {
+            int connect = assign.back();
+            assign.pop_back();
+        }
+        outerVerts = newOuter;
+    }
     return triField;
 }
