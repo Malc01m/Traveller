@@ -32,6 +32,8 @@ namespace GeometryGen {
     */
     Group tile(std::vector<std::array<float, 2>> coords);
 
+    Group wheel(int numVerts, float radius, float distScatter, float angScatter);
+
     /**
      * @return an irregular triangular tiling
      * @todo finish

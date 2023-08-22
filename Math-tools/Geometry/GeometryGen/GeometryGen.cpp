@@ -35,29 +35,35 @@ Polygon GeometryGen::regularPoly(int verts, float radius) {
     return c;
 }
 
+Group GeometryGen::wheel(int numVerts, float radius, float distScatter, float angScatter) {
+    std::array<float, 2> center = {0, 0};
+    Group wheel("wheel");
+    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, radius, distScatter, angScatter);
+
+    for (int i = 1; i < numVerts; i++) {
+        Polygon centTri = Polygon("wheel triangle " + std::to_string(i));
+        centTri.addVertex(center);
+        centTri.addVertex(armVect.at(i - 1));
+        centTri.addVertex(armVect.at(i));
+        wheel.addPolygon(centTri);
+    }
+
+    Polygon centTri = Polygon("wheel closing triangle");
+    centTri.addVertex(center);
+    centTri.addVertex(armVect.at(armVect.size() - 1));
+    centTri.addVertex(armVect.at(0));
+    wheel.addPolygon(centTri);
+
+    return wheel;
+}
+
 Group GeometryGen::tile(std::vector<std::array<float, 2>> coords) {
     throw("GeometryGen::tile: Not implemented");
 }
 
 Group GeometryGen::triField(int iter, float avgDist, float distScatter, float angScatter) {
-    std::array<float, 2> center = {0, 0};
-    Group triField("triField");
     int numVerts = Rand::randIntBetween(3, 5);
-    std::vector<std::array<float, 2>> armVect = GeometryInfo::radial(numVerts, avgDist, distScatter, angScatter);
-
-    for (int i = 1; i < numVerts; i++) {
-        Polygon centTri = Polygon("triField central triangle " + std::to_string(i));
-        centTri.addVertex(center);
-        centTri.addVertex(armVect.at(i - 1));
-        centTri.addVertex(armVect.at(i));
-        triField.addPolygon(centTri);
-    }
-
-    Polygon centTri = Polygon("triField closing central triangle");
-    centTri.addVertex(center);
-    centTri.addVertex(armVect.at(armVect.size() - 1));
-    centTri.addVertex(armVect.at(0));
-    triField.addPolygon(centTri);
-
+    Group triField = wheel(numVerts, avgDist, distScatter, angScatter);
+    triField.setName("trifield");
     return triField;
 }
