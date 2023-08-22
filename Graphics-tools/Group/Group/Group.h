@@ -89,6 +89,11 @@ class Group {
         bool isVertexAt(int poly, int vert);
 
         /**
+         * @returns The number of polygons in the group
+        */
+        int getNumPolygons();
+
+        /**
          * @brief Returns a pointer to a polygon in the group, or an empty
          * polygon if none exists at the given index
          */

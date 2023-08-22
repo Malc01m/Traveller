@@ -87,6 +87,10 @@ bool Group::isVertexAt(int poly, int vert) {
     return false;
 }
 
+int Group::getNumPolygons() {
+    return polys.size();
+}
+
 std::shared_ptr<Polygon> Group::getPolygon(int ind) {
     if (isPolygonAt(ind)) {
         return polys.at(ind);
