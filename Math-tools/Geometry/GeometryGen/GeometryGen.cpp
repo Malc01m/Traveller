@@ -66,29 +66,31 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter,
         float angScatter) {
 
     // Use a wheel as center tris.
-    int numVerts = Rand::randIntBetween(3, 5);
+    int numVerts = Rand::randIntBetween(3, 6);
     int ang = Rand::randFloatBetween(0, 2 * M_PI);
     Group triField = wheel(numVerts, avgDist, ang, distScatter, angScatter);
     triField.setName("trifield");
 
     // Get initial outer verts
-    std::vector<std::array<float, 2>> outerVerts;
+    std::vector<std::array<float, 2>> lastOuter;
     for (int i = 0; i < triField.getNumPolygons(); i++) {
-        outerVerts.push_back(triField.getPolygon(i)->getVertexAt(1));
+        lastOuter.push_back(triField.getPolygon(i)->getVertexAt(1));
     }
 
     for (int i = 2; i < iter + 2; i++) {
         // Create new outer vertex ring
-        int numVerts = Rand::randIntBetween(outerVerts.size(), (5 * i));
+        int numVerts = Rand::randIntBetween(2 * lastOuter.size(), 
+            3 * lastOuter.size());
         std::vector<std::array<float, 2>> newOuter = 
             GeometryInfo::radial(numVerts, (avgDist * i), ang,
             distScatter, angScatter);
         
         // Distribute new vertices evenly to old vertices
-        int vertRatio = newOuter.size() / outerVerts.size();
-        int stray = newOuter.size() % outerVerts.size();
+        int vertRatio = newOuter.size() / lastOuter.size();
+        int stray = newOuter.size() % lastOuter.size();
+
         std::vector<int> assign;
-        for (int i = 0; i < outerVerts.size(); i++) {
+        for (int i = 0; i < lastOuter.size(); i++) {
             if (stray > 0) {
                 assign.push_back(vertRatio + 1);
                 stray = stray - 1;
@@ -97,31 +99,41 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter,
             }
         }
 
-        // Connect old and new
-        int newInd = 0;
-        for (int j = 0; j < outerVerts.size(); j++) {
-            int connect = assign.back();
-            assign.pop_back();
+        // Align new with last ring
+        float avgSegs = newOuter.size() / (float)lastOuter.size();
+        float angSegment = (M_PI * 2) / numVerts;
+        float ang = (angSegment / 2) * avgSegs;
+        newOuter = GeometryInfo::rotate(newOuter, {0, 0}, -ang);
 
-            for (int k = 0; k < connect; k++) {
+        // Connect old and new with tris
+        int outerInd = 0;
+        for (int j = 0; j < assign.size(); j++) {
+
+            // Create number of vertex tris according to vals in assign
+            for (int k = 0; k < assign.at(j); k++) {
                 Polygon tri = Polygon("trifield iter " + std::to_string(i) + 
-                    ", connect part " + std::to_string(k) +
-                    ", outer ring part " + std::to_string(newInd));
-                tri.addVertex(outerVerts.at(j));
-                if (newOuter.size() < newInd + 1) {
-                    tri.addVertex(newOuter.at(newInd));
-                    tri.addVertex(newOuter.at(newInd + 1));
-                } else {
-                    // Seems to produce flipped normal?
-                    tri.addVertex(newOuter.at(0));
-                    tri.addVertex(newOuter.at(newInd));
-                }
+                    ", connect part " + std::to_string(outerInd) +
+                    ", outer ring part " + std::to_string(j));
+                tri.addVertex(lastOuter.at(j));
+                tri.addVertex(newOuter.at(outerInd));
+                tri.addVertex(newOuter.at((outerInd + 1) % newOuter.size()));
                 triField.addPolygon(tri);
-                newInd++;
+
+                outerInd++;
             }
+
+            // When we've finished the vertex set, we need an edge tri
+            Polygon tri = Polygon("trifield iter " + std::to_string(i) + 
+                ", connect part " + std::to_string(outerInd) +
+                ", outer ring part " + std::to_string(j));
+            tri.addVertex(lastOuter.at(j));
+            tri.addVertex(lastOuter.at((j + 1) % lastOuter.size()));
+            tri.addVertex(newOuter.at(outerInd % newOuter.size()));
+            triField.addPolygon(tri);
+
         }
 
-        outerVerts = newOuter;
+        lastOuter = newOuter;
     }
     return triField;
 }

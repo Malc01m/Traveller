@@ -46,10 +46,11 @@ namespace GeometryGen {
     Group wheel(int numVerts, float radius, float ang, float radScatter, float angScatter);
 
     /**
+     * @brief Creates a tiling constructed of concentric rings of triangles.
      * @return an irregular triangular tiling
-     * @todo finish
     */
-    Group triField(int iter, float avgDist, float distScatter, float angScatter);
+    Group triField(int iter, float avgDist, float distScatter, 
+        float angScatter);
 }
 
 #endif
