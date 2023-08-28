@@ -10,12 +10,13 @@ INCLUDEPATHS = \
 	-I ./Math-tools/Rand \
 	-I ./Math-tools/Geometry/GeometryGen \
 	-I ./Math-tools/Geometry/GeometryInfo \
-	-I ./Math-tools/Geometry/Polygon
+	-I ./Math-tools/Geometry/Polygon \
+	-I ./World-tools/World
 
 FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic
 OBJEXT = ".o"
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
-	Rand Shader ShaderProgram source sdlglSetup
+	Rand Shader ShaderProgram source sdlglSetup World
 OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
@@ -87,6 +88,11 @@ Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp
 Rand = ./Math-tools/Rand/Rand.cpp
 ./build/Rand.o: $(Rand)
 	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
+
+# World
+World = ./World-tools/World/World.cpp
+./build/World.o: $(World)
+	g++ -c $(FLAGS) $(World) -o ./build/World.o
 
 # Clean
 clean:

@@ -18,7 +18,7 @@
 #include "GridGroup.h"
 #include "EditGroup.h"
 #include "Polygon.h"
-
+#include "World.h"
 #include "GeometryGen.h"
 
 int main () {
@@ -54,7 +54,7 @@ int main () {
 
     EditGroup eg("EditGroup", dgptr);
     
-    std::string test = "trifield";
+    std::string test = "World";
     if (test == "grid") {
 
         GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
@@ -70,7 +70,7 @@ int main () {
 
     } else if (test == "trifield") {
 
-        Group triField = GeometryGen::triField(1, 0.2, 0.0, 0.0);
+        Group triField = GeometryGen::triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
         
         dg.addGroup(triField);
         eg.addGroup(triField);
@@ -78,6 +78,15 @@ int main () {
         dg.scatterColorComponent(-0.4, 0);
         dg.scatterColorComponent(-0.4, 1);
         dg.scatterColorComponent(-0.4, 2);
+
+    } else if (test == "World") {
+
+        std::cout << "Building world...\n";
+        World world = World();
+
+        std::cout << "Adding groups...\n";
+        dg.addGroup(world.getWorldGroup());
+        eg.addGroup(world.getWorldGroup());
 
     }
 

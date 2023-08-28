@@ -49,8 +49,10 @@ namespace GeometryGen {
      * @brief Creates a tiling constructed of concentric rings of triangles.
      * @return an irregular triangular tiling
     */
-    Group triField(int iter, float avgDist, float distScatter, 
-        float angScatter);
+    Group triFieldRadial(int iter, int initVerts, float avgDist, 
+        float distScatter, float angScatter, float ringGrowthFactor);
+
+    Group triTiles(float dist);
 }
 
 #endif

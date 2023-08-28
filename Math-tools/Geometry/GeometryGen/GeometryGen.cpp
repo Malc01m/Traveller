@@ -62,13 +62,11 @@ Group GeometryGen::tile(std::vector<std::array<float, 2>> coords) {
     throw("GeometryGen::tile: Not implemented");
 }
 
-Group GeometryGen::triField(int iter, float avgDist, float distScatter, 
-        float angScatter) {
+Group GeometryGen::triFieldRadial(int iter, int initVerts, float avgDist, 
+        float distScatter, float angScatter, float ringGrowthFactor) {
 
     // Use a wheel as center tris.
-    int numVerts = Rand::randIntBetween(3, 6);
-    int ang = Rand::randFloatBetween(0, 2 * M_PI);
-    Group triField = wheel(numVerts, avgDist, ang, distScatter, angScatter);
+    Group triField = wheel(initVerts, avgDist, 0, distScatter, angScatter);
     triField.setName("trifield");
 
     // Get initial outer verts
@@ -77,12 +75,12 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter,
         lastOuter.push_back(triField.getPolygon(i)->getVertexAt(1));
     }
 
+    float angCorrection = 0;
     for (int i = 2; i < iter + 2; i++) {
         // Create new outer vertex ring
-        int numVerts = Rand::randIntBetween(2 * lastOuter.size(), 
-            3 * lastOuter.size());
+        int numVerts = std::round(lastOuter.size() * ringGrowthFactor);
         std::vector<std::array<float, 2>> newOuter = 
-            GeometryInfo::radial(numVerts, (avgDist * i), ang,
+            GeometryInfo::radial(numVerts, (avgDist * i), 0,
             distScatter, angScatter);
         
         // Distribute new vertices evenly to old vertices
@@ -102,8 +100,8 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter,
         // Align new with last ring
         float avgSegs = newOuter.size() / (float)lastOuter.size();
         float angSegment = (M_PI * 2) / numVerts;
-        float ang = (angSegment / 2) * avgSegs;
-        newOuter = GeometryInfo::rotate(newOuter, {0, 0}, -ang);
+        angCorrection = angCorrection + (angSegment / 2) * avgSegs;
+        newOuter = GeometryInfo::rotate(newOuter, {0, 0}, -angCorrection);
 
         // Connect old and new with tris
         int outerInd = 0;
@@ -136,4 +134,27 @@ Group GeometryGen::triField(int iter, float avgDist, float distScatter,
         lastOuter = newOuter;
     }
     return triField;
+}
+
+Group GeometryGen::triTiles(float dist, int row, int col) {
+    // Make tile patch
+    float height = std::sqrt(std::pow(dist, 2) - std::pow(dist / 2, 2));
+    Polygon rootTileOne = Polygon("triTile root 1");
+    rootTileOne.addVertex(0, 0);
+    rootTileOne.addVertex(dist, 0);
+    rootTileOne.addVertex(dist / 2, height);
+    Polygon rootTileTwo = Polygon("triTile root 2");
+    rootTileTwo.addVertex(dist + (dist / 2), height);
+    rootTileTwo.addVertex(dist, 0);
+    rootTileTwo.addVertex(dist / 2, height);
+
+    Group tilePatch = Group();
+    tilePatch.addPolygon(rootTileOne);
+    tilePatch.addPolygon(rootTileTwo);
+    Group tiles = Group(tilePatch);
+
+    for (int i = 0; i < col; i++) {
+        
+    }
+    return tiles;
 }
