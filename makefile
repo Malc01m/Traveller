@@ -13,7 +13,7 @@ INCLUDEPATHS = \
 	-I ./Math-tools/Geometry/Polygon \
 	-I ./World-tools/World
 
-FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic
+FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
 OBJEXT = ".o"
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
 	Rand Shader ShaderProgram source sdlglSetup World
