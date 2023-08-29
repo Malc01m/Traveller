@@ -54,7 +54,7 @@ int main () {
 
     EditGroup eg("EditGroup", dgptr);
     
-    std::string test = "World";
+    std::string test = "trifield";
     if (test == "grid") {
 
         GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
@@ -72,12 +72,12 @@ int main () {
 
         Group triField = GeometryGen::triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
         
-        dg.addGroup(triField);
         eg.addGroup(triField);
 
-        dg.scatterColorComponent(-0.4, 0);
-        dg.scatterColorComponent(-0.4, 1);
-        dg.scatterColorComponent(-0.4, 2);
+        dgptr->addGroup(triField);
+        dgptr->scatterColorComponent(-0.4, 0);
+        dgptr->scatterColorComponent(-0.4, 1);
+        dgptr->scatterColorComponent(-0.4, 2);
 
     } else if (test == "World") {
 
@@ -89,12 +89,6 @@ int main () {
         eg.addGroup(world.getWorldGroup());
 
     }
-
-    // Is failing
-    dg.saveGroup();
-
-    dg.clear();
-    dg.draw();
 
     eg.initEditor();
 
