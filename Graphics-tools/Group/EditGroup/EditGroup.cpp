@@ -1,6 +1,9 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
+#ifdef DEBUG
+    #include <chrono>
+#endif
 
 #include "EditGroup.h"
 #include "GeometryInfo.h"
@@ -86,11 +89,17 @@ void EditGroup::initEditor() {
     bool redrawFlag;
 
     if (polys.size() > 0) {
+        drawGroupPtr->addPolygon(vertCursor);
         hoverVertex(0, 0);
     }
     redraw();
 
     while (true) {
+
+        #ifdef DEBUG
+            // Start timer for elapsed
+            std::chrono::steady_clock::time_point frameBegin = std::chrono::steady_clock::now();
+        #endif
 
         redrawFlag = false;
 
@@ -176,15 +185,21 @@ void EditGroup::initEditor() {
 
         if (redrawFlag) {
             redraw();
-            printStatus();
+
+            #ifdef DEBUG
+                // Print frame time elapsed and entire group contents
+                std::chrono::steady_clock::time_point frameEnd = 
+                    std::chrono::steady_clock::now();
+                std::cout << "Frame took " << std::chrono::duration_cast<
+                    std::chrono::microseconds>(frameEnd - frameBegin).count() 
+                    << " microseconds\n";
+                printStatus();
+            #endif
         }
     }
 }
 
 void EditGroup::redraw() {
-    drawGroupPtr->empty();
-    drawGroupPtr->addPolygons(polys);
-    drawGroupPtr->addPolygon(vertCursor);
     drawGroupPtr->clear();
     drawGroupPtr->draw();
 }
