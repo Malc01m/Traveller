@@ -14,6 +14,9 @@ class EditGroup : public Group {
 
         EditGroup(std::string name, std::shared_ptr<DrawGroup> drawGroupPtr);
 
+        // Overrides
+        void addGroup(Group grp);
+
         //Polygon edit functions
 
         /**

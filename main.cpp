@@ -57,35 +57,26 @@ int main () {
     std::string test = "trifield";
     if (test == "grid") {
 
+        // Make grid
         GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
-
         Polygon tile = GeometryGen::regularPoly(4, 0.027);
         tile.scale(tile.getCenter(), 2.1, 0);
-
         gg.fill(tile, 0, 0, 9, 9);
         gg.centerAt({0, 0});
 
-        dg.addGroup(gg);
         eg.addGroup(gg);
 
     } else if (test == "trifield") {
 
         Group triField = GeometryGen::triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
-        
         eg.addGroup(triField);
-
-        dgptr->addGroup(triField);
-        dgptr->scatterColorComponent(-0.4, 0);
-        dgptr->scatterColorComponent(-0.4, 1);
-        dgptr->scatterColorComponent(-0.4, 2);
+        eg.scatterColorComponent(-0.4, 0);
+        eg.scatterColorComponent(-0.4, 1);
+        eg.scatterColorComponent(-0.4, 2);
 
     } else if (test == "World") {
 
-        std::cout << "Building world...\n";
         World world = World();
-
-        std::cout << "Adding groups...\n";
-        dg.addGroup(world.getWorldGroup());
         eg.addGroup(world.getWorldGroup());
 
     }

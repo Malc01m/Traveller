@@ -14,6 +14,11 @@ EditGroup::EditGroup(std::string name, std::shared_ptr<DrawGroup> drawGroupPtr) 
     vertCursor->setName("Vertex cursor");
 }
 
+void EditGroup::addGroup(Group grp) {
+    Group::addGroup(grp);
+    drawGroupPtr->addGroup(grp);
+}
+
 bool EditGroup::hoverPoly(int ind) {
     if ((ind >= 0) && (ind < static_cast<int>(polys.size()))) {
         polyHoverInd = ind;
