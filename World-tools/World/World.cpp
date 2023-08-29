@@ -11,7 +11,7 @@ Group World::getWorldGroup() {
 }
 
 Group World::genTerrain() {
-    Group terrain = GeometryGen::triTiles(0.1);
+    Group terrain = GeometryGen::triTiles(0.1, 5, 5);
     terrain.setColor({0.2, 1, 0, 1});
     terrain.scatterColorLightness(0.3);
     return terrain;

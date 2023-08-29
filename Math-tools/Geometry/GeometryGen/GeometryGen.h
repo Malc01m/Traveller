@@ -52,7 +52,7 @@ namespace GeometryGen {
     Group triFieldRadial(int iter, int initVerts, float avgDist, 
         float distScatter, float angScatter, float ringGrowthFactor);
 
-    Group triTiles(float dist);
+    Group triTiles(float dist, int row, int col);
 }
 
 #endif
