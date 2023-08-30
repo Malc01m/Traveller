@@ -23,8 +23,10 @@
 
 int main () {
 
+    // Seed rand with the current time
     std::srand(std::time(nullptr));
 
+    // Initialize needed libraries
     sdlglSetup setup;
     if (!setup.setupFullscreen()) {
         return -1;
@@ -49,9 +51,10 @@ int main () {
     int color = gsetup.getColor();
     int transparency = gsetup.getTransparency();
 
+    // Initialize test editor
     EditGroup eg("EditGroup", whratio, window, ctx, color, transparency);
     
-    std::string test = "trifield";
+    std::string test = "grid";
     if (test == "grid") {
 
         // Make grid
@@ -63,10 +66,17 @@ int main () {
 
         eg.addGroup(gg);
 
+        // Make things colorful to visually distinguish polygons
+        eg.scatterColorComponent(-0.4, 0);
+        eg.scatterColorComponent(-0.4, 1);
+        eg.scatterColorComponent(-0.4, 2);
+
     } else if (test == "trifield") {
 
         Group triField = GeometryGen::triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
         eg.addGroup(triField);
+
+        // Make things colorful to visually distinguish polygons
         eg.scatterColorComponent(-0.4, 0);
         eg.scatterColorComponent(-0.4, 1);
         eg.scatterColorComponent(-0.4, 2);
@@ -79,44 +89,4 @@ int main () {
     }
 
     eg.initEditor();
-
-    /*
-    SDL_Event event;
-    while (true) {
-        bool redraw = false;
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                SDL_Quit();
-                exit(0);
-            }
-            if (event.type == SDL_KEYDOWN) {
-                if (event.key.keysym.sym == SDLK_ESCAPE) {
-                    SDL_Quit();
-                    exit(0);
-                }
-                if (event.key.keysym.sym == SDLK_a) {
-                    dg.scatterColorComponent(-0.1, 0);
-                    redraw = true;
-                }
-                if (event.key.keysym.sym == SDLK_s) {
-                    dg.scatterColorComponent(-0.1, 1);
-                    redraw = true;
-                }
-                if (event.key.keysym.sym == SDLK_d) {
-                    dg.scatterColorComponent(-0.1, 2);
-                    redraw = true;
-                }
-                if (event.key.keysym.sym == SDLK_f) {
-                    dg.scatterColorComponent(-0.1, 3);
-                    redraw = true;
-                }
-            }
-        }
-        if (redraw) {
-            dg.clear();
-            dg.draw();
-            dg.printStatus();
-        }
-    }
-    */
 }
