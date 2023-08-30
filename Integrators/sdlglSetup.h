@@ -14,6 +14,13 @@ class sdlglSetup {
         bool setupFullscreen();
 
         /**
+         * @brief Attempts to set GL version, checks to see if it was set, warns if not.
+         * 
+         * @return true on success
+         */
+        bool requestGLVer(int maj, int min);
+
+        /**
          * @brief Starts the SDL video module
          * 
          * @return true on success
@@ -33,14 +40,6 @@ class sdlglSetup {
          * @return true on success
          */
         bool startGLContext();
-
-        /**
-         * @brief Sets the version of OpenGL to use
-         * 
-         * @param major the major version number
-         * @param minor the minor version number
-         */
-        void setGLVer(int major, int minor);
 
         /**
          * @brief Sets the swap interval to the monitor's refresh rate, preventing screen tearing 
