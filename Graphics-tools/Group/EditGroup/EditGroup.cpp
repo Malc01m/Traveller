@@ -8,15 +8,17 @@
 #include "EditGroup.h"
 #include "GeometryInfo.h"
 
-EditGroup::EditGroup(std::string name, std::shared_ptr<DrawGroup> drawGroupPtr) : Group(name) {
-    EditGroup::drawGroupPtr = drawGroupPtr;
+//Constructor
+EditGroup::EditGroup(std::string name, float whratio, SDL_Window *window, 
+        std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency) : Group(name) {
+    EditGroup::whratio = whratio;
+    EditGroup::window = window;
+    EditGroup::ctx = ctx;
+    EditGroup::color = color;
+    EditGroup::transparency = transparency;
+
     vertCursor->setColor({1.0, 0.0, 0.0, 1.0});
     vertCursor->setName("Vertex cursor");
-}
-
-void EditGroup::addGroup(Group grp) {
-    Group::addGroup(grp);
-    drawGroupPtr->addGroup(grp);
 }
 
 bool EditGroup::hoverPoly(int ind) {
@@ -93,11 +95,16 @@ void EditGroup::initEditor() {
     SDL_Event event;
     bool redrawFlag;
 
+    DrawGroup editDG = DrawGroup("Editor DrawGroup", whratio, window, ctx, color, transparency);
+    editDG.addPolygons(polys);
+
     if (polys.size() > 0) {
-        drawGroupPtr->addPolygon(vertCursor);
+        editDG.addPolygon(vertCursor);
         hoverVertex(0, 0);
     }
-    redraw();
+
+    editDG.clear();
+    editDG.draw();
 
     while (true) {
 
@@ -189,7 +196,8 @@ void EditGroup::initEditor() {
         }
 
         if (redrawFlag) {
-            redraw();
+            editDG.clear();
+            editDG.draw();
 
             #ifdef DEBUG
                 // Print frame time elapsed and entire group contents
@@ -202,9 +210,4 @@ void EditGroup::initEditor() {
             #endif
         }
     }
-}
-
-void EditGroup::redraw() {
-    drawGroupPtr->clear();
-    drawGroupPtr->draw();
 }

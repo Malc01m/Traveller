@@ -4,6 +4,8 @@
 #include <vector>
 #include <array>
 
+#include <SDL2/SDL.h>
+
 #include "GeometryGen.h"
 #include "Group.h"
 #include "DrawGroup.h"
@@ -12,10 +14,8 @@ class EditGroup : public Group {
 
     public:
 
-        EditGroup(std::string name, std::shared_ptr<DrawGroup> drawGroupPtr);
-
-        // Overrides
-        void addGroup(Group grp);
+        EditGroup(std::string name, float whratio, SDL_Window *window, 
+            std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency);
 
         //Polygon edit functions
 
@@ -97,23 +97,28 @@ class EditGroup : public Group {
          */
         void initEditor();
 
-        /**
-         * @brief Redraw method for the in-program editor
-         */
-        void redraw();
-
     private:
+
+        // DrawGroup information (for DrawGroup construction in initEditor)
+        GLint color = 0;
+        GLint transparency = 0;
+        float whratio;
+        SDL_Window *window = nullptr;
+        std::shared_ptr<SDL_GLContext> ctx = nullptr;
         
+        // Modes
         int freeMoveMode = true;
 
+        // Cursor
+
+        // Position
         int polyHoverInd = 0;
         int vertHoverInd = 0;
 
+        // Poly
         Polygon cursorPoly = GeometryGen::regularPoly(4, 0.01);
         std::shared_ptr<Polygon> vertCursor = 
             std::make_shared<Polygon>(cursorPoly);
-
-        std::shared_ptr<DrawGroup> drawGroupPtr;
 
 };
 

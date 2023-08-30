@@ -49,10 +49,7 @@ int main () {
     int color = gsetup.getColor();
     int transparency = gsetup.getTransparency();
 
-    DrawGroup dg("Draw Group", whratio, window, ctx, color, transparency);
-    std::shared_ptr<DrawGroup> dgptr = std::make_shared<DrawGroup>(dg);
-
-    EditGroup eg("EditGroup", dgptr);
+    EditGroup eg("EditGroup", whratio, window, ctx, color, transparency);
     
     std::string test = "trifield";
     if (test == "grid") {
