@@ -143,11 +143,11 @@ void EditGroup::initEditor() {
                 }
 
                 //Cycle vertices
-                if (event.key.keysym.sym == SDLK_q) {
+                if (event.key.keysym.sym == SDLK_e) {
                     hoverNextVertex();
                     redrawFlag = true;
                 }
-                if (event.key.keysym.sym == SDLK_e) {
+                if (event.key.keysym.sym == SDLK_q) {
                     hoverPrevVertex();
                     redrawFlag = true;
                 }
