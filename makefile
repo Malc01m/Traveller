@@ -14,86 +14,81 @@ INCLUDEPATHS = \
 	-I ./World-tools/World
 
 FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
-OBJEXT = ".o"
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
 	Rand Shader ShaderProgram source sdlglSetup World
 OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
 #Compile
-compile: main.cpp $(OBJ_DEST)
+compile: main.cpp $(OBJ_DEST) ./build
 	g++ $(FLAGS) main.cpp $(OBJ_DEST) -o ./build/Traveller -lSDL2 -lGLEW -lGLU -lGL
 	./build/Traveller
-
-.PHONY: all
-
-#Build dir
-all: ./build
 
 ./build:
 	mkdir -p ./build
 
 #Integrators
-sdlglSetup = ./Integrators/sdlglSetup.cpp
+sdlglSetup = ./Integrators/sdlglSetup.cpp ./build
 ./build/sdlglSetup.o: $(sdlglSetup)
 	g++ -c $(FLAGS) $(sdlglSetup) -o ./build/sdlglSetup.o
 
-glewSetup = ./Integrators/glewSetup.cpp
+glewSetup = ./Integrators/glewSetup.cpp ./build
 ./build/glewSetup.o: $(glewSetup)
 	g++ -c $(FLAGS) $(glewSetup) -o ./build/glewSetup.o
 
 #Group
-Group = ./Graphics-tools/Group/Group/Group.cpp
+Group = ./Graphics-tools/Group/Group/Group.cpp ./build
 ./build/Group.o: $(Group) ./build/GeometryInfo.o
 	g++ -c $(FLAGS) $(Group) -o ./build/Group.o
 
-DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp
+DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp ./build
 ./build/DrawGroup.o: $(DrawGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(DrawGroup) -o ./build/DrawGroup.o
 
-EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp
+EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp ./build
 ./build/EditGroup.o: $(EditGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(EditGroup) -o ./build/EditGroup.o
 
-GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp
+GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp ./build
 ./build/GridGroup.o: $(GridGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(GridGroup) -o ./build/GridGroup.o
 
 #Shaders
-Shader = ./Graphics-tools/Shader/Shader.cpp
+Shader = ./Graphics-tools/Shader/Shader.cpp ./build
 ./build/Shader.o: $(Shader)
 	g++ -c $(FLAGS) $(Shader) -o ./build/Shader.o 
 
-ShaderProgram = ./Graphics-tools/Shader/ShaderProgram.cpp
+ShaderProgram = ./Graphics-tools/Shader/ShaderProgram.cpp ./build
 ./build/ShaderProgram.o: $(ShaderProgram) ./build/Shader.o
 	g++ -c $(FLAGS) $(ShaderProgram) -o ./build/ShaderProgram.o
 
-source = ./Graphics-tools/Shader/source.cpp
+source = ./Graphics-tools/Shader/source.cpp ./build
 ./build/source.o: $(source)
 	g++ -c $(FLAGS) $(source) -o ./build/source.o
 
 #Math
-GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp
+GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp ./build
 ./build/GeometryGen.o: $(GeometryGen) ./build/Rand.o ./build/Polygon.o ./build/GeometryInfo.o ./build/Group.o
 	g++ -c $(FLAGS) $(GeometryGen) -o ./build/GeometryGen.o
 
-GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp
+GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp ./build
 ./build/GeometryInfo.o: $(GeometryInfo) ./build/Rand.o
 	g++ -c $(FLAGS) $(GeometryInfo) -o ./build/GeometryInfo.o
 
-Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp
+Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp ./build
 ./build/Polygon.o: $(Polygon) ./build/GeometryInfo.o
 	g++ -c $(FLAGS) $(Polygon) -o ./build/Polygon.o
 
-Rand = ./Math-tools/Rand/Rand.cpp
+Rand = ./Math-tools/Rand/Rand.cpp ./build
 ./build/Rand.o: $(Rand)
 	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
 
 # World
-World = ./World-tools/World/World.cpp
+World = ./World-tools/World/World.cpp ./build
 ./build/World.o: $(World)
 	g++ -c $(FLAGS) $(World) -o ./build/World.o
 
 # Clean
 clean:
-	rm ./build/*.o
+	rm ./build/*
+	rmdir ./build
