@@ -54,7 +54,7 @@ int main () {
     // Initialize test editor
     EditGroup eg("EditGroup", whratio, window, ctx, color, transparency);
     
-    std::string test = "grid";
+    std::string test = "World";
     if (test == "grid") {
 
         // Make grid
