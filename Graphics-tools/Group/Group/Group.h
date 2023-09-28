@@ -29,6 +29,10 @@ class Group {
          */
         void setName(std::string name);
 
+        ///////////////////
+        // Set geometry //
+        /////////////////
+
         /**
          * @brief Adds a polygon pointer to the group
          * 
@@ -44,7 +48,14 @@ class Group {
         void addPolygon(Polygon poly);
 
         /**
-         * @brief Adds multiple object pointers to the group
+         * @brief Creates pointers to and adds polygons to the group
+         * 
+         * @param polys vector of Polygons to be pointerized and added
+        */
+        void addPolygons(std::vector<Polygon> polys);
+
+        /**
+         * @brief Adds multiple polygon pointers to the group
          * 
          * @param polys The polygon pointers to be added
          */
@@ -78,6 +89,10 @@ class Group {
          */
         void setPolygons(std::vector<Polygon> polys);
 
+        ///////////////////
+        // Get Geometry //
+        /////////////////
+
         /** 
          * @brief Returns true if a polygon exists at the given index
         */
@@ -109,7 +124,9 @@ class Group {
          */
         std::vector<std::array<float, 2>> getVertices();
 
-        //Group functions
+        ///////////////////////
+        // Group Operations //
+        /////////////////////
 
         /**
          * @brief Adds all object pointers in another group to this group
@@ -117,6 +134,10 @@ class Group {
          * @param gr The group to add object pointers from
          */
         void addGroup(Group gr);
+
+        ///////////////////////////////
+        // Geometry Transformations //
+        /////////////////////////////
 
         /**
          * @brief Rotates the contents of the group by angle around pivot
@@ -157,6 +178,18 @@ class Group {
         void scale(float factor);
 
         /**
+         * @brief Scales the contents of the group by factor
+         * 
+         * @param factor factor to scale by
+         * @param axis Axis to scale along
+         */
+        void scale(float factor, int axis);
+
+        ////////////////////
+        // Geometry info //
+        //////////////////
+
+        /**
          * @brief Gets the smallest value on axis in the group
          * 
          * @param axis Axis to find the smallest value on
@@ -178,6 +211,10 @@ class Group {
          * @return std::array<float, 2> 
          */
         std::array<float, 2> getCenter();
+
+        ////////////
+        // Color //
+        //////////
 
         /**
          * @brief Sets the color of all polygons in the group to color
@@ -225,6 +262,10 @@ class Group {
          */
         void scatterColorLightness(float maxChange);
 
+        /////////////
+        // Status //
+        ///////////
+
         /**
          * @brief Returns a string containing a report about the polygons 
          * in the group for debug purposes
@@ -238,6 +279,10 @@ class Group {
          * @brief Prints the group's status report to console
         */
         void printStatus();
+
+        /////////////////////////
+        // Saving and loading //
+        ///////////////////////
 
         /**
          * @brief Saves getStatus() to a file in a generated saves subdirectory
@@ -256,6 +301,9 @@ class Group {
 
         std::string name = "Unnamed_group";
         std::vector<std::shared_ptr<Polygon>> polys;
+        // Indices of vertices that are part of a joint group.
+        // (joint number, poly, vert)
+        std::vector<std::array<int, 3>> joints;
 
         /**
          * TODO: Move out of group
