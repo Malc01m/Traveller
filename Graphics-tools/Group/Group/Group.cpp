@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Group.h"
+#include "Rand.h"
 #include "GeometryInfo.h"
 
 Group::Group() {
@@ -40,6 +41,12 @@ void Group::addPolygon(std::shared_ptr<Polygon> poly) {
 
 void Group::addPolygon(Polygon poly) {
     polys.push_back(std::make_shared<Polygon>(poly));
+}
+
+void Group::addPolygons(std::vector<Polygon> polys) {
+    for (unsigned int i = 0; i < polys.size(); i++) {
+        Group::polys.push_back(std::make_shared<Polygon>(polys.at(i)));
+    }
 }
 
 void Group::addPolygons(std::vector<std::shared_ptr<Polygon>> polys) {
@@ -142,6 +149,13 @@ void Group::centerAt(std::array<float, 2> point) {
     centerAt(point.at(1), 1);
 }
 
+void Group::scale(float factor, int axis) {
+    std::array<float, 2> center = getCenter();
+    for (unsigned int i = 0; i < polys.size(); i++) {
+        polys.at(i)->scale(center, factor, axis);
+    }
+}
+
 void Group::scale(float factor) {
     std::array<float, 2> center = getCenter();
     for (unsigned int i = 0; i < polys.size(); i++) {
@@ -188,17 +202,14 @@ void Group::shiftColorLightness(float shift) {
 
 void Group::scatterColorComponent(float maxChange, int component) {
     for (unsigned int i = 0; i < polys.size(); i++) {
-        //(rand() / (float)RAND_MAX) results in 0.0 through 1.0
-        polys.at(i)->shiftColorComponent((rand() / (float)RAND_MAX) * maxChange, component);
+        polys.at(i)->shiftColorComponent(
+            Rand::randFloatBetween(-maxChange, maxChange), component);
     }
 }
 
 void Group::scatterColorLightness(float maxChange) {
     for (unsigned int i = 0; i < polys.size(); i++) {
-        //(rand() / (float)RAND_MAX) results in 0.0 through 1.0,
-        //Multiplying by two is 0.0 to 2.0,
-        //Subtracting one is -1.0 to 1.0
-        float randShift = (((rand() / (float)RAND_MAX) * 2) - 1) * maxChange;
+        float randShift = Rand::randFloatBetween(-maxChange, maxChange);
         polys.at(i)->shiftColorLightness(randShift);
     }
 }
