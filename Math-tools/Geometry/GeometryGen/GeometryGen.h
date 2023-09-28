@@ -52,7 +52,10 @@ namespace GeometryGen {
     Group triFieldRadial(int iter, int initVerts, float avgDist, 
         float distScatter, float angScatter, float ringGrowthFactor);
 
-    Group triTiles(float dist, int row, int col);
+    Group triTiles(float dist, int row, int col, float scatter);
+
+    std::vector<std::array<float, 2>> pointGrid(float dist, 
+        int rows, int cols, float scatter);
 }
 
 #endif
