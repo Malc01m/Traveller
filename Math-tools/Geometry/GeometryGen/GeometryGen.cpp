@@ -136,25 +136,77 @@ Group GeometryGen::triFieldRadial(int iter, int initVerts, float avgDist,
     return triField;
 }
 
-Group GeometryGen::triTiles(float dist, int row, int col) {
-    // Make tile patch
+Group GeometryGen::triTiles(float dist, int rows, int cols, float scatter) {
+    Group tiles;
     float height = std::sqrt(std::pow(dist, 2) - std::pow(dist / 2, 2));
-    Polygon rootTileOne = Polygon("triTile root 1");
-    rootTileOne.addVertex(0, 0);
-    rootTileOne.addVertex(dist, 0);
-    rootTileOne.addVertex(dist / 2, height);
-    Polygon rootTileTwo = Polygon("triTile root 2");
-    rootTileTwo.addVertex(dist + (dist / 2), height);
-    rootTileTwo.addVertex(dist, 0);
-    rootTileTwo.addVertex(dist / 2, height);
+    std::vector<std::array<float, 2>> grid = pointGrid(height, 
+        rows + 1, cols + 1, scatter);
 
-    Group tilePatch = Group();
-    tilePatch.addPolygon(rootTileOne);
-    tilePatch.addPolygon(rootTileTwo);
-    Group tiles = Group(tilePatch);
+    for (int i = 0; i < rows + 1; i++) {
+        int rowOffset = ((rows + 1) * i);
 
-    for (int i = 0; i < col; i++) {
-        
+        // Shift vertices of every other point row right
+        if (i % 2 == 1) {
+            for (int j = 0; j < cols + 1; j++) {
+                grid.at(j + rowOffset) = {
+                    grid.at(j + rowOffset).at(0) + (dist / 2),
+                    grid.at(j + rowOffset).at(1)
+                };
+            }
+        }
+    }
+
+    for (int i = 0; i < rows; i++) {
+        int rowOffset = ((rows + 1) * i);
+
+        for (int j = 0; j < cols; j++) {
+            std::array<float, 2> sharedVert1;
+            std::array<float, 2> sharedVert2;
+            std::array<float, 2> tri1Vert;
+            std::array<float, 2> tri2Vert;
+
+            if (i % 2 == 0) {
+                sharedVert1 = grid.at(cols + 1 + j + rowOffset);
+                sharedVert2 = grid.at(j + 1 + rowOffset);
+                tri1Vert = grid.at(j + rowOffset);
+                tri2Vert = grid.at(cols + 2 + j + rowOffset);
+            } else {
+                sharedVert1 = grid.at(j + rowOffset);
+                sharedVert2 = grid.at(cols + 2 + j + rowOffset);
+                tri1Vert = grid.at(cols + 1 + j + rowOffset);
+                tri2Vert = grid.at(j + 1 + rowOffset);
+            }
+
+            Polygon tri1 = Polygon("TriTile at (" + std::to_string(j) + ", " 
+                + std::to_string(i) + ", 1)");
+            tri1.addVertex(sharedVert1);
+            tri1.addVertex(sharedVert2);
+            tri1.addVertex(tri1Vert);
+            tiles.addPolygon(tri1);
+
+            Polygon tri2 = Polygon("TriTile at (" + std::to_string(j) + ", " 
+                + std::to_string(i) + ", 2)");
+            tri2.addVertex(sharedVert1);
+            tri2.addVertex(sharedVert2);
+            tri2.addVertex(tri2Vert);
+            tiles.addPolygon(tri2);
+        }
     }
     return tiles;
+}
+
+std::vector<std::array<float, 2>> GeometryGen::pointGrid(float dist, 
+        int rows, int cols, float scatter) {
+
+    std::vector<std::array<float, 2>> grid;
+    for (int i = 0; i < rows; i++) {
+        float ypos = dist * i;
+        for (int j = 0; j < cols; j++) {
+            float xpos = dist * j;
+            float xscatter = Rand::randFloatBetween(0, scatter);
+            float yscatter = Rand::randFloatBetween(0, scatter);
+            grid.push_back({xpos + xscatter, ypos + yscatter});
+        }
+    }
+    return grid;
 }
