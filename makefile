@@ -1,3 +1,6 @@
+# Traveller makefile
+# NOTE: Assumes build dir exists, you'll have to create one
+
 INCLUDEPATHS = \
 	-I ./Integrators \
 	-I ./Graphics-tools \
@@ -20,71 +23,68 @@ OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
 #Compile
-compile: main.cpp $(OBJ_DEST) ./build
+compile: main.cpp $(OBJ_DEST)
 	g++ $(FLAGS) main.cpp $(OBJ_DEST) -o ./build/Traveller -lSDL2 -lGLEW -lGLU -lGL
 	./build/Traveller
 
-./build:
-	mkdir -p ./build
-
 #Integrators
-sdlglSetup = ./Integrators/sdlglSetup.cpp ./build
+sdlglSetup = ./Integrators/sdlglSetup.cpp
 ./build/sdlglSetup.o: $(sdlglSetup)
 	g++ -c $(FLAGS) $(sdlglSetup) -o ./build/sdlglSetup.o
 
-glewSetup = ./Integrators/glewSetup.cpp ./build
+glewSetup = ./Integrators/glewSetup.cpp
 ./build/glewSetup.o: $(glewSetup)
 	g++ -c $(FLAGS) $(glewSetup) -o ./build/glewSetup.o
 
 #Group
-Group = ./Graphics-tools/Group/Group/Group.cpp ./build
+Group = ./Graphics-tools/Group/Group/Group.cpp
 ./build/Group.o: $(Group) ./build/GeometryInfo.o
 	g++ -c $(FLAGS) $(Group) -o ./build/Group.o
 
-DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp ./build
+DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp
 ./build/DrawGroup.o: $(DrawGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(DrawGroup) -o ./build/DrawGroup.o
 
-EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp ./build
+EditGroup = ./Graphics-tools/Group/EditGroup/EditGroup.cpp
 ./build/EditGroup.o: $(EditGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(EditGroup) -o ./build/EditGroup.o
 
-GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp ./build
+GridGroup = ./Graphics-tools/Group/GridGroup/GridGroup.cpp
 ./build/GridGroup.o: $(GridGroup) ./build/Group.o
 	g++ -c $(FLAGS) $(GridGroup) -o ./build/GridGroup.o
 
 #Shaders
-Shader = ./Graphics-tools/Shader/Shader.cpp ./build
+Shader = ./Graphics-tools/Shader/Shader.cpp
 ./build/Shader.o: $(Shader)
 	g++ -c $(FLAGS) $(Shader) -o ./build/Shader.o 
 
-ShaderProgram = ./Graphics-tools/Shader/ShaderProgram.cpp ./build
+ShaderProgram = ./Graphics-tools/Shader/ShaderProgram.cpp
 ./build/ShaderProgram.o: $(ShaderProgram) ./build/Shader.o
 	g++ -c $(FLAGS) $(ShaderProgram) -o ./build/ShaderProgram.o
 
-source = ./Graphics-tools/Shader/source.cpp ./build
+source = ./Graphics-tools/Shader/source.cpp
 ./build/source.o: $(source)
 	g++ -c $(FLAGS) $(source) -o ./build/source.o
 
 #Math
-GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp ./build
+GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp
 ./build/GeometryGen.o: $(GeometryGen) ./build/Rand.o ./build/Polygon.o ./build/GeometryInfo.o ./build/Group.o
 	g++ -c $(FLAGS) $(GeometryGen) -o ./build/GeometryGen.o
 
-GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp ./build
+GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp
 ./build/GeometryInfo.o: $(GeometryInfo) ./build/Rand.o
 	g++ -c $(FLAGS) $(GeometryInfo) -o ./build/GeometryInfo.o
 
-Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp ./build
+Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp
 ./build/Polygon.o: $(Polygon) ./build/GeometryInfo.o
 	g++ -c $(FLAGS) $(Polygon) -o ./build/Polygon.o
 
-Rand = ./Math-tools/Rand/Rand.cpp ./build
+Rand = ./Math-tools/Rand/Rand.cpp
 ./build/Rand.o: $(Rand)
 	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
 
 # World
-World = ./World-tools/World/World.cpp ./build
+World = ./World-tools/World/World.cpp
 ./build/World.o: $(World)
 	g++ -c $(FLAGS) $(World) -o ./build/World.o
 
