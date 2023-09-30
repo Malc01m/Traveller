@@ -1,3 +1,6 @@
+#ifndef STRINGTOOLS_H
+#define STRINGTOOLS_H
+
 #include <string>
 #include <vector>
 
@@ -12,3 +15,5 @@ namespace StringTools {
     std::string strVectToNewlines(std::vector<std::string> vect);
 
 }
+
+#endif
