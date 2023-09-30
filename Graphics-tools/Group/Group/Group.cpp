@@ -4,6 +4,7 @@
 #include "Group.h"
 #include "Rand.h"
 #include "GeometryInfo.h"
+#include "StringTools.h"
 
 Group::Group() {
     
@@ -237,7 +238,7 @@ bool Group::saveGroup() {
     std::ofstream saveStream;
     saveStream.open("./saves/" + Group::name + ".txt");
     if (saveStream.is_open()) {
-        saveStream << strVectToNewlines(getStatus());
+        saveStream << StringTools::strVectToNewlines(getStatus());
         saveStream.close();
         return true;
     } else {
@@ -247,12 +248,4 @@ bool Group::saveGroup() {
 
 void Group::loadGroup() {
 
-}
-
-std::string Group::strVectToNewlines(std::vector<std::string> vect) {
-    std::string str;
-    for (unsigned int i = 0; i < vect.size(); i++) {
-        str.append(vect.at(i) + "\n");
-    }
-    return str;
 }

@@ -14,11 +14,12 @@ INCLUDEPATHS = \
 	-I ./Math-tools/Geometry/GeometryGen \
 	-I ./Math-tools/Geometry/GeometryInfo \
 	-I ./Math-tools/Geometry/Polygon \
+	-I ./Data-tools/StringTools \
 	-I ./World-tools/World
 
 FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
-	Rand Shader ShaderProgram source sdlglSetup World
+	Rand Shader ShaderProgram source sdlglSetup StringTools World
 OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
@@ -38,7 +39,7 @@ glewSetup = ./Integrators/glewSetup.cpp
 
 #Group
 Group = ./Graphics-tools/Group/Group/Group.cpp
-./build/Group.o: $(Group) ./build/GeometryInfo.o
+./build/Group.o: $(Group) ./build/GeometryInfo.o ./build/StringTools.o
 	g++ -c $(FLAGS) $(Group) -o ./build/Group.o
 
 DrawGroup = ./Graphics-tools/Group/DrawGroup/DrawGroup.cpp
@@ -82,6 +83,11 @@ Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp
 Rand = ./Math-tools/Rand/Rand.cpp
 ./build/Rand.o: $(Rand)
 	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
+
+# Data
+StringTools = ./Data-tools/StringTools/StringTools.cpp
+./build/StringTools.o: $(StringTools)
+	g++ -c $(FLAGS) $(StringTools) -o ./build/StringTools.o
 
 # World
 World = ./World-tools/World/World.cpp

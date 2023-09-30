@@ -305,15 +305,6 @@ class Group {
         // (joint number, poly, vert)
         std::vector<std::array<int, 3>> joints;
 
-        /**
-         * TODO: Move out of group
-         * @brief Converts a vector of strings to a string with newlines
-         * 
-         * @param arr 
-         * @return std::string 
-         */
-        std::string strVectToNewlines(std::vector<std::string> vect);
-
 };
 
 #endif
