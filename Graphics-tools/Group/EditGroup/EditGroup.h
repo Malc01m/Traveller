@@ -17,7 +17,18 @@ class EditGroup : public Group {
         EditGroup(std::string name, float whratio, SDL_Window *window, 
             std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency);
 
-        //Polygon edit functions
+        ///////////////////
+        // Editor State //
+        /////////////////
+        
+        /**
+         * @brief Initializes the polygon group editor
+         */
+        void initEditor();
+
+        ////////////////
+        // Selection //
+        //////////////
 
         /**
          * @brief Selects an Polygon by index
@@ -40,16 +51,6 @@ class EditGroup : public Group {
          * @return false if the first Polygon is already selected
         */
         bool hoverPrevPoly();
-
-        /**
-         * @brief Creates a new regular polygon
-         * 
-         * @param verts Number of vertices
-         * @param radius Distance from center to a vertex
-         */
-        void newRegPoly(int verts, float radius);
-
-        //Vertex edit functions
 
         /**
          * @brief Realigns the cursor with the currently hovered vertex
@@ -81,6 +82,10 @@ class EditGroup : public Group {
         */
         bool hoverPrevVertex();
 
+        /////////////////////////////
+        // Edit Selected Geometry //
+        ///////////////////////////
+
         /**
          * @brief Moves the currently hovered-over vertex
          * 
@@ -90,12 +95,17 @@ class EditGroup : public Group {
          */
         bool shiftHoveredVertex(int axis, float offset);
 
-        //Editor functions
+        ///////////////////
+        // New geometry //
+        /////////////////
 
         /**
-         * @brief Initializes an in-program editor
+         * @brief Creates a new regular polygon
+         * 
+         * @param verts Number of vertices
+         * @param radius Distance from center to a vertex
          */
-        void initEditor();
+        void newRegPoly(int verts, float radius);
 
     private:
 
