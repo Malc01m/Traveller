@@ -123,94 +123,15 @@ void Group::addGroup(Group gr) {
     addPolygons(gr.getPolygons());
 }
 
-void Group::rotate(std::array<float, 2> pivot, float angle) {
+void Group::setColor( int polyIndx, std::array<float, 4> color) {
+    // TODO Check bounds
+    polys.at(polyIndx)->setColor(color);
+}
+
+void Group::setColors(std::vector<std::array<float, 4>> colors) {
+    // TODO Check bounds, for to while
     for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->rotate(pivot, angle);
-    }
-}
-
-void Group::shift(float offset, int axis) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shift(offset, axis);
-    }
-}
-
-void Group::centerAt(float offset, int axis) {
-    float max = getMax(axis);
-    float min = getMin(axis);
-    float center = ((max - min) / 2.0) + min;
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shift(offset - center, axis);
-    }
-}
-
-void Group::centerAt(std::array<float, 2> point) {
-    centerAt(point.at(0), 0);
-    centerAt(point.at(1), 1);
-}
-
-void Group::scale(float factor, int axis) {
-    std::array<float, 2> center = getCenter();
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->scale(center, factor, axis);
-    }
-}
-
-void Group::scale(float factor) {
-    std::array<float, 2> center = getCenter();
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->scale(center, factor, 0);
-        polys.at(i)->scale(center, factor, 1);
-    }
-}
-
-float Group::getMin(int axis) {
-    return GeometryInfo::getMin(getVertices(), axis);
-}
-
-float Group::getMax(int axis) {
-    return GeometryInfo::getMax(getVertices(), axis);
-}
-
-std::array<float, 2> Group::getCenter() {
-    return GeometryInfo::getCenter(getVertices());
-}
-
-void Group::setColor(std::array<float, 4> color) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->setColor(color);
-    }
-}
-
-void Group::shiftColor(std::array<float, 4> shiftColor) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shiftColor(shiftColor);
-    }
-}
-
-void Group::shiftColorComponent(float shift, int component) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shiftColorComponent(shift, component);
-    }
-}
-
-void Group::shiftColorLightness(float shift) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shiftColorLightness(shift);
-    }
-}
-
-void Group::scatterColorComponent(float maxChange, int component) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        polys.at(i)->shiftColorComponent(
-            Rand::randFloatBetween(-maxChange, maxChange), component);
-    }
-}
-
-void Group::scatterColorLightness(float maxChange) {
-    for (unsigned int i = 0; i < polys.size(); i++) {
-        float randShift = Rand::randFloatBetween(-maxChange, maxChange);
-        polys.at(i)->shiftColorLightness(randShift);
+        polys.at(i)->setColor(colors.at(i));
     }
 }
 

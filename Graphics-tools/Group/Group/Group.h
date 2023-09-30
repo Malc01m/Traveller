@@ -89,6 +89,24 @@ class Group {
          */
         void setPolygons(std::vector<Polygon> polys);
 
+        ////////////////
+        // Set color //
+        //////////////
+
+        /**
+         * @brief Sets the color of the polygon at the given index
+         * 
+         * @param color Color to be applied
+         */
+        void setColor(int polyIndx, std::array<float, 4> color);
+
+        /**
+         * @brief Sets the colors polygons in the group to same-index colors
+         * 
+         * @param colors vector of colors to replace current colors
+         */
+        void setColors(std::vector<std::array<float, 4>> colors);
+
         ///////////////////
         // Get Geometry //
         /////////////////
@@ -134,133 +152,6 @@ class Group {
          * @param gr The group to add object pointers from
          */
         void addGroup(Group gr);
-
-        ///////////////////////////////
-        // Geometry Transformations //
-        /////////////////////////////
-
-        /**
-         * @brief Rotates the contents of the group by angle around pivot
-         * 
-         * @param pivot pivot to rotate around
-         * @param angle angle to rotate in radians
-         */
-        void rotate(std::array<float, 2> pivot, float angle);
-
-        /**
-         * @brief Shifts the entire group by offset on axis
-         * 
-         * @param offset the distance to shift by
-         * @param axis the axis to shift along
-         */
-        void shift(float offset, int axis);
-
-        /**
-         * @brief Centers the contents of the group around the offset on axis
-         * 
-         * @param offset the location to center around
-         * @param axis the axis to center on
-         */
-        void centerAt(float offset, int axis);
-
-        /**
-         * @brief Centers the contents of the group around point
-         * 
-         * @param point the point to center around
-         */
-        void centerAt(std::array<float, 2> point);
-
-        /**
-         * @brief Scales the contents of the group by factor
-         * 
-         * @param factor factor to scale by
-         */
-        void scale(float factor);
-
-        /**
-         * @brief Scales the contents of the group by factor
-         * 
-         * @param factor factor to scale by
-         * @param axis Axis to scale along
-         */
-        void scale(float factor, int axis);
-
-        ////////////////////
-        // Geometry info //
-        //////////////////
-
-        /**
-         * @brief Gets the smallest value on axis in the group
-         * 
-         * @param axis Axis to find the smallest value on
-         * @return The smallest value
-         */
-        float getMin(int axis);
-
-        /**
-         * @brief Gets the largest value on axis in the group
-         * 
-         * @param axis Axis to find the largest value on
-         * @return The largest value
-         */
-        float getMax(int axis);
-
-        /**
-         * @brief Gets the central point of the contents of the group
-         * 
-         * @return std::array<float, 2> 
-         */
-        std::array<float, 2> getCenter();
-
-        ////////////
-        // Color //
-        //////////
-
-        /**
-         * @brief Sets the color of all polygons in the group to color
-         * 
-         * @param color to be applied to all polygons
-         */
-        void setColor(std::array<float, 4> color);
-
-        /**
-         * @brief Shifts the color of all polygons in the group by colorShift
-         * 
-         * @param shiftColor to be applied to all polygons
-         */
-        void shiftColor(std::array<float, 4> shiftColor);
-
-        /**
-         * @brief Shifts a color component of all polygons in the group
-         * 
-         * @param maxChange maximum value to change color value by
-         * @param component 0 is red, 1 is green, 2 is blue, 3 is alpha
-         */
-        void shiftColorComponent(float shift, int component);
-
-        /**
-         * @brief Shifts the lightnesses of the colors of all polygons in 
-         * the group
-         * 
-         * @param maxChange maximum value to change color values by
-         */
-        void shiftColorLightness(float shift);
-
-        /**
-         * @brief Scatters a color component of all polygons in the group
-         * 
-         * @param maxChange maximum value to change color value by
-         * @param component 0 is red, 1 is green, 2 is blue, 3 is alpha
-         */
-        void scatterColorComponent(float maxChange, int component);
-
-        /**
-         * @brief Scatters the lightnesses of the colors of all polygons in 
-         * the group
-         * 
-         * @param maxChange maximum value to change color values by
-         */
-        void scatterColorLightness(float maxChange);
 
         /////////////
         // Status //
