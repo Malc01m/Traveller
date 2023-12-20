@@ -160,13 +160,21 @@ std::vector<std::array<float, 2>> GeometryInfo::shift(std::vector<std::array<flo
     return verts;
 }
 
-std::vector<std::array<float, 2>> GeometryInfo::centerAt(std::vector<std::array<float, 2>> verts, float offset, int axis) {
+std::vector<std::array<float, 2>> GeometryInfo::centerAt(
+        std::vector<std::array<float, 2>> verts, float offset, int axis) {
     float max = getExtreme(verts, true, axis);
     float min = getExtreme(verts, false, axis);
     float center = ((max - min) / 2.0) + min;
     for (unsigned int i = 0; i < verts.size(); i++) {
         verts.at(i) = shift(verts.at(i), offset - center, axis);
     }
+    return verts;
+}
+
+std::vector<std::array<float, 2>> GeometryInfo::centerAt(
+        std::vector<std::array<float, 2>> verts, std::array<float, 2> offset) {
+    verts = centerAt(verts, offset.at(0), 0);
+    verts = centerAt(verts, offset.at(1), 1);
     return verts;
 }
 

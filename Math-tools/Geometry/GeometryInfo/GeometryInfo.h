@@ -100,6 +100,8 @@ namespace GeometryInfo {
     //Shifts all verticess on axis to be centered around cntr
     std::vector<std::array<float, 2>> centerAt(
         std::vector<std::array<float, 2>> verts, float offset, int axis);
+    std::vector<std::array<float, 2>> centerAt(
+        std::vector<std::array<float, 2>> verts, std::array<float, 2> offset);
 
     //Scale
 
