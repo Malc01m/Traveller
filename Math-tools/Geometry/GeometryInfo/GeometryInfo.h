@@ -3,6 +3,12 @@
 
 #include <array>
 #include <vector>
+#include <memory>
+#include <iostream>
+
+using Point = std::array<float, 2>;
+using PointPtr = std::shared_ptr<Point>;
+using PointsPtr = std::shared_ptr<std::vector<PointPtr>>;
 
 namespace GeometryInfo {
 
@@ -15,7 +21,7 @@ namespace GeometryInfo {
      * @param point2 the second point
      * @return the distance between two points
      */
-    float getDist(std::array<float, 2> point1, std::array<float, 2> point2);
+    float getDist(Point point1, Point point2);
 
     /**
      * @brief Gets the smallest value on one axis in a set of vertices
@@ -24,7 +30,7 @@ namespace GeometryInfo {
      * @param axis The axis to search on. 0 is x, 1 is y.
      * @return the smallest value on the given axis in verts
      */
-    float getMin(std::vector<std::array<float, 2>> verts, int axis);
+    float getMin(PointsPtr verts, int axis);
 
     /**
      * @brief Gets the largest value on one axis in a set of vertices
@@ -33,84 +39,84 @@ namespace GeometryInfo {
      * @param axis The axis to search on. 0 is x, 1 is y.
      * @return the largest value on the given axis in verts
      */
-    float getMax(std::vector<std::array<float, 2>> verts, int axis);
+    float getMax(PointsPtr verts, int axis);
 
     /**
      * @return the angle between point1 and point2 with respect to pivot
     */
-    float getAngle(std::array<float, 2> point1, std::array<float, 2> point2, std::array<float, 2> pivot);
+    float getAngle(Point point1, Point point2, Point pivot);
 
     /**
      * @return the center of verts on an axis
     */
-    float getCenter(std::vector<std::array<float, 2>> verts, int axis);
+    float getCenter(PointsPtr verts, int axis);
     
     /**
      * @return the center of verts on both axes
     */
-    std::array<float, 2> getCenter(std::vector<std::array<float, 2>> verts);
+    Point getCenter(PointsPtr verts);
 
-    std::array<float, 2> getTopLeft(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getTopRight(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getBottomLeft(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getBottomRight(std::vector<std::array<float, 2>> verts);
+    Point getTopLeft(PointsPtr verts);
+    Point getTopRight(PointsPtr verts);
+    Point getBottomLeft(PointsPtr verts);
+    Point getBottomRight(PointsPtr verts);
 
-    std::array<float, 2> getLeftCenter(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getRightCenter(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getTopCenter(std::vector<std::array<float, 2>> verts);
-    std::array<float, 2> getBottomCenter(std::vector<std::array<float, 2>> verts);
+    Point getLeftCenter(PointsPtr verts);
+    Point getRightCenter(PointsPtr verts);
+    Point getTopCenter(PointsPtr verts);
+    Point getBottomCenter(PointsPtr verts);
 
     //Returns the vector of points reordered by closeness
-    std::vector<std::array<float, 2>> sortByNear(
-        std::vector<std::array<float, 2>> points);
+    PointsPtr sortByNear(
+        PointsPtr points);
 
     //Returns the vector of points zigzagged by closeness
-    std::vector<std::array<float, 2>> zagSort(
-        std::vector<std::array<float, 2>> points);
+    PointsPtr zagSort(
+        PointsPtr points);
 
     //Transformations
 
     //Rotate
 
     //Rotates the point by angle in radians around the pivot
-    std::array<float, 2> rotate(std::array<float, 2> point, 
-        std::array<float, 2> pivot, float angle);
+    Point rotate(Point point, 
+        Point pivot, float angle);
     //Rotates all points by angle in radians around the pivot
-    std::vector<std::array<float, 2>> rotate(
-        std::vector<std::array<float, 2>> verts, std::array<float, 2> pivot, 
+    PointsPtr rotate(
+        PointsPtr verts, Point pivot, 
         float angle);
 
     //Shift
 
     //Shifts the point on axis by offset
-    std::array<float, 2> shift(std::array<float, 2> point, float offset, 
+    Point shift(Point point, float offset, 
         int axis);
     //Shifts all vertices on axis by offset
-    std::vector<std::array<float, 2>> shift(
-        std::vector<std::array<float, 2>> verts, float offset, int axis);
+    PointsPtr shift(
+        PointsPtr verts, float offset, int axis);
     //Shifts the point at angle by offset
-    std::array<float, 2> shift(std::array<float, 2> point, float offset, 
+    Point shift(Point point, float offset, 
         float angle);
     //Shifts all points at angle by offset
-    std::vector<std::array<float, 2>> shift(
-        std::vector<std::array<float, 2>> verts, float offset, float angle);
+    PointsPtr shift(
+        PointsPtr verts, float offset, float angle);
 
     //Center at
 
     //Shifts all verticess on axis to be centered around cntr
-    std::vector<std::array<float, 2>> centerAt(
-        std::vector<std::array<float, 2>> verts, float offset, int axis);
-    std::vector<std::array<float, 2>> centerAt(
-        std::vector<std::array<float, 2>> verts, std::array<float, 2> offset);
+    PointsPtr centerAt(
+        PointsPtr verts, float offset, int axis);
+    PointsPtr centerAt(
+        PointsPtr verts, Point offset);
 
     //Scale
 
     //Scales the point around center on axis by factor
-    std::array<float, 2> scale(std::array<float, 2> point, 
-        std::array<float, 2> center, float factor, int axis);
+    Point scale(Point point, 
+        Point center, float factor, int axis);
     //Scales all verticess around center on axis by factor
-    std::vector<std::array<float, 2>> scale(
-        std::vector<std::array<float, 2>> verts, std::array<float, 2> center, 
+    PointsPtr scale(
+        PointsPtr verts, Point center, 
         float factor, int axis);
 
     // Formations
@@ -118,7 +124,7 @@ namespace GeometryInfo {
      * @brief Creates a formation of points around a center
      * @returns a vector of point arrays 
     */
-    std::vector<std::array<float, 2>> radial(int numArms, float dist, float ang, 
+    PointsPtr radial(int numArms, float dist, float ang, 
         float distScatter, float angScatter);
 
 }

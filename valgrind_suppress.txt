@@ -1,0 +1,243 @@
+{
+   <dl_open_worker_strncmp>
+   Memcheck:Addr8
+   fun:strncmp
+   ...
+   fun:dl_open_worker
+}
+{
+   <libdxcore_cond>
+   Memcheck:Cond
+   ...
+   obj:/usr/lib/wsl/lib/libdxcore.so
+   ...
+}
+{
+   <amdxc64_param>
+   Memcheck:Param
+   ioctl(generic)
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <libdxcore_value_8>
+   Memcheck:Value8
+   ...
+   obj:/usr/lib/wsl/lib/libdxcore.so
+   ...
+}
+{
+   <amdxc64_cond>
+   Memcheck:Cond
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_value_8>
+   Memcheck:Value8
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_addr_8>
+   Memcheck:Addr8
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_addr_4>
+   Memcheck:Addr4
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_addr_2>
+   Memcheck:Addr2
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_addr_1>
+   Memcheck:Addr1
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <swrast_dri_addr_8>
+   Memcheck:Addr8
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <swrast_dri_addr_4>
+   Memcheck:Addr4
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <swrast_dri_addr_2>
+   Memcheck:Addr2
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <swrast_dri_addr_1>
+   Memcheck:Addr1
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <libd3d12core_param>
+   Memcheck:Param
+   ioctl(generic)
+   ...
+   obj:/usr/lib/wsl/lib/libd3d12core.so
+   ...
+}
+{
+   <swrast_dri_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <swrast_dri_possible_leak>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <libSDL2_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.18.2
+   ...
+}
+{
+   <amdxc64_possible_leak>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <amdxc64_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/wsl/drivers/u0400644.inf_amd64_9691c8ee1bbfcbb7/B399690/amdxc64.so
+   ...
+}
+{
+   <libSDL2_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.18.2
+   ...
+}
+{
+   <libSDL2_possible_leak>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.18.2
+   ...
+}
+{
+   <libd3d12_possible_leak>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:/usr/lib/wsl/lib/libd3d12.so
+   ...
+}
+{
+   <libd3d12_definite_leak>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   obj:/usr/lib/wsl/lib/libd3d12.so
+   ...
+}
+{
+   <swrast_dri_indirect_leak>
+   Memcheck:Leak
+   match-leak-kinds: indirect
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <swrast_dri_definite_leak>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri/swrast_dri.so
+   ...
+}
+{
+   <libdxcore_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/wsl/lib/libdxcore.so
+   ...
+}
+{
+   <libd3d12_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/wsl/lib/libd3d12.so
+   ...
+}
+{
+   <dl_open_worker_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dl_open_worker
+   ...
+}
+{
+   <libX11_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+   ...
+}
+{
+   <libGLX_mesa_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0.0.0
+   ...
+}
+{
+   <libLLVM-15_reachable_leak>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libLLVM-15.so.1
+   ...
+}

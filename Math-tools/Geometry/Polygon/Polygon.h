@@ -6,12 +6,24 @@
 #include <tuple>
 #include <math.h>
 #include <string>
+#include <memory>
+#include <iostream>
+
+using Point = std::array<float, 2>;
+using PointsPtr = std::shared_ptr<std::vector<std::shared_ptr<Point>>>;
+using Color = std::array<float, 4>;
+using ColorPtr = std::shared_ptr<Color>;
 
 class Polygon {
 
     public:
 
         // Constructors
+
+        /**
+         * @brief Constructs a polyogn
+        */
+        Polygon();
 
         /**
          * @brief Constructs a polyogn
@@ -27,13 +39,13 @@ class Polygon {
          * @param vertices The vertices of the polygon
          * @param color The color of the polygon in (r, g, b, a) format
         */
-        Polygon(std::string name, std::vector<std::array<float, 2>> vertices, std::array<float, 4> color);
+        Polygon(std::string name, PointsPtr vertices, std::array<float, 4> color);
         
         // Copy constructor
         Polygon(const Polygon &poly);
 
         // Typecasts
-        operator std::vector<std::array<float, 2>>() {return vertices;};
+        operator PointsPtr() {return vertices;};
 
         // Setters
 
@@ -42,14 +54,14 @@ class Polygon {
          * 
          * @param vertices Vertices to give the polygon
         */
-        void setVertices(std::vector<std::array<float, 2>> vertices);
+        void setVertices(PointsPtr vertices);
 
         /**
          * @brief Sets the polygon's color 
          * 
          * @param color The new color of the polygon in (r, g, b, a) format
         */
-        void setColor(std::array<float, 4> color);
+        void setColor(Color color);
 
         /**
          * @brief Sets the polygon's name
@@ -73,7 +85,7 @@ class Polygon {
          * 
          * @returns the polygon's vertices as a vector of floats in (x, y), (x, y)... format
         */
-        std::vector<std::array<float, 2>> getVertices();
+        PointsPtr getVertices();
 
         /**
          * @brief Gets a vertex from the polygon's vertices
@@ -81,12 +93,17 @@ class Polygon {
          * @param ind The index of the vertex to get
          * @returns The vertex at the given index in vertices
         */
-        std::array<float, 2> getVertexAt(int ind);
+        Point getVertexAt(int ind);
 
         /** 
          * @returns Returns polygon's color as an array of floats in (r, g, b, t) format
         */
-        std::array<float, 4> getColor();    
+        Color getColor();    
+
+        /** 
+         * @returns Returns polygon's color pointer
+        */
+        ColorPtr getColorPtr();    
 
         // Manipulators
 
@@ -103,7 +120,12 @@ class Polygon {
          * 
          * @param vert The x, y coordinates of the new vertex
         */
-        void addVertex(std::array<float, 2> vert);
+        void addVertex(Point vert);
+
+        /**
+         * @brief Creates new shared pointers for all vertices
+         */
+        void decoupleVerts();
 
         /**
          * @brief Removes a vertex
@@ -125,7 +147,7 @@ class Polygon {
          * 
          * @param shiftColor The values to be added to color
          */
-        void shiftColor(std::array<float, 4> shiftColor);
+        void shiftColor(Color shiftColor);
 
         /**
          * @brief Shifts a component of the color of the polygon by shift
@@ -142,34 +164,23 @@ class Polygon {
          */
         void shiftColorLightness(float shift);
 
-        //Transforms
-
-        /**
-         * @brief 
-        */
-        float getMin(int axis);
-        float getMax(int axis);
-        std::array<float, 2> getCenter();
-        void rotate(std::array<float, 2> pivot, float angle);
-        void shift(float offset, int axis);
-        void centerAt(float offset, int axis);
-        void centerAt(std::array<float, 2> center);
-        void scale(std::array<float, 2> center, float factor, int axis);
-
         //Debug
 
+        void printStatus();
         std::vector<std::string> getStatus();
         std::vector<std::string> getStatus(int num);
 
     private:
 
-        std::string name;
+        std::string name = "Null";
 
         //Polygon's vertices in (x, y), (x, y)... format
-        std::vector<std::array<float, 2>> vertices;
+        PointsPtr vertices = std::make_shared<std::vector<std::shared_ptr<Point>>>(
+            std::vector<std::shared_ptr<Point>>()
+        );
 
         //Polygon's color in (r, g, b, t) format
-        std::array<float, 4> color = {1.0, 1.0, 1.0, 1.0};
+        ColorPtr color = std::make_shared<Color>(Color({1.0, 1.0, 1.0, 1.0}));
 
         // Status helper functions
         std::vector<std::string> getStatusVertices(std::vector<std::string>);

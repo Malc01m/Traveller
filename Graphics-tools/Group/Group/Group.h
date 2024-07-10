@@ -4,8 +4,13 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <iostream>
 
 #include "Polygon.h"
+#include "GeometryInfo.h"
+
+using PolysPtr = std::shared_ptr<std::vector<std::shared_ptr<Polygon>>>;
+using ColorsPtr = std::shared_ptr<std::vector<std::shared_ptr<Color>>>;
 
 class Group {
 
@@ -17,8 +22,30 @@ class Group {
         Group(Polygon poly);
         Group(std::string name);
         Group(std::string name, Polygon poly);
-        Group(std::string name, std::vector<std::shared_ptr<Polygon>> polys);
-        Group(std::vector<std::shared_ptr<Polygon>> polys);
+        Group(std::string name, PolysPtr polys);
+        Group(PolysPtr polys);
+
+        // Typecasts
+        operator PolysPtr() {
+            return polys;
+        };
+        operator PointsPtr() {
+            PointsPtr newPointVecPtr = std::make_shared<std::vector<std::shared_ptr<Point>>>(std::vector<std::shared_ptr<Point>>());
+            for (unsigned int i = 0; i < polys->size(); i++) {
+                PointsPtr thisPolyPoints = polys->at(i)->getVertices();
+                for (unsigned int j = 0; j < thisPolyPoints->size(); j++) {
+                    newPointVecPtr->push_back(thisPolyPoints->at(j));
+                }
+            }
+            return newPointVecPtr;
+        };
+        operator ColorsPtr() {
+            ColorsPtr newColVecPtr = std::make_shared<std::vector<std::shared_ptr<Color>>>(std::vector<std::shared_ptr<Color>>());
+            for (unsigned int i = 0; i < polys->size(); i++) {
+                newColVecPtr->push_back(polys->at(i)->getColorPtr());
+            }
+            return newColVecPtr;
+        }
 
         //Object functions
 
@@ -79,7 +106,7 @@ class Group {
          * @param polys The polygon pointers that the group's previous polygon
          *              pointers will be replaced by
          */
-        void setPolygons(std::vector<std::shared_ptr<Polygon>> polys);
+        void setPolygons(PolysPtr polys);
 
         /**
          * @brief Replaces all polygons in the group
@@ -98,14 +125,21 @@ class Group {
          * 
          * @param color Color to be applied
          */
-        void setColor(int polyIndx, std::array<float, 4> color);
+        void setColor(int polyIndx, Color color);
 
         /**
-         * @brief Sets the colors polygons in the group to same-index colors
+         * @brief Sets the colors of polygons in the group to the given color
+         * 
+         * @param color color to replace current colors
+        */
+        void setColors(std::array<float, 4> color);
+
+        /**
+         * @brief Sets the colors of polygons in the group to same-index colors
          * 
          * @param colors vector of colors to replace current colors
          */
-        void setColors(std::vector<std::array<float, 4>> colors);
+        void setColors(std::vector<Color> colors);
 
         ///////////////////
         // Get Geometry //
@@ -135,12 +169,12 @@ class Group {
         /**
          * @brief Returns pointers to all polygons in the group
          */
-        std::vector<std::shared_ptr<Polygon>> getPolygons();
+        PolysPtr getPolygons();
 
         /**
          * @brief Returns all vertices in all polygons in the group
          */
-        std::vector<std::array<float, 2>> getVertices();
+        std::vector<Point> getVertices();
 
         ///////////////////////
         // Group Operations //
@@ -191,10 +225,8 @@ class Group {
     protected:
 
         std::string name = "Unnamed_group";
-        std::vector<std::shared_ptr<Polygon>> polys;
-        // Indices of vertices that are part of a joint group.
-        // (joint number, poly, vert)
-        std::vector<std::array<int, 3>> joints;
+        PolysPtr polys = std::make_shared<std::vector<std::shared_ptr<Polygon>>>(
+            std::vector<std::shared_ptr<Polygon>>());
 
 };
 

@@ -16,18 +16,18 @@ void DrawGroup::clear() {
 
 void DrawGroup::draw() {
     //Need a context, window, shader program, and some polygons to draw anything
-    if ((ctx != nullptr) && (window != nullptr) && (polys.size() > 0)) {
+    if ((ctx != nullptr) && (window != nullptr) && (polys->size() > 0)) {
 
         //For as many polygons as are in the group...
-        for (int i = 0; i < static_cast<int>(polys.size()); i++) {
+        for (int i = 0; i < static_cast<int>(polys->size()); i++) {
             std::shared_ptr<Polygon> poly = getPolygon(i);
             std::vector<std::array<float, 2>> verts;
 
             //Collect and modify values
-            for (int j = 0; j < static_cast<int>(poly->getVertices().size()); j++) {
+            for (int j = 0; j < static_cast<int>(poly->getVertices()->size()); j++) {
                 verts.push_back(std::array<float, 2>{
-                    (poly->getVertices().at(j)[0] + panX),            //x
-                    ((poly->getVertices().at(j)[1] + panY) * whratio)   //y
+                    (poly->getVertices()->at(j)->at(0) + panX),            //x
+                    ((poly->getVertices()->at(j)->at(1) + panY) * whratio)   //y
                 });
             }
 

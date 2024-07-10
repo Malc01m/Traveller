@@ -22,7 +22,7 @@ EditGroup::EditGroup(std::string name, float whratio, SDL_Window *window,
 }
 
 bool EditGroup::hoverPoly(int ind) {
-    if ((ind >= 0) && (ind < static_cast<int>(polys.size()))) {
+    if ((ind >= 0) && (ind < static_cast<int>(polys->size()))) {
         polyHoverInd = ind;
         vertHoverInd = 0;
         hoverVertex(polyHoverInd, vertHoverInd);
@@ -47,14 +47,14 @@ bool EditGroup::hoverPrevPoly() {
 
 void EditGroup::newRegPoly(int verts, float radius) {
     std::shared_ptr<Polygon> newRegPoly = std::make_shared<Polygon>(GeometryGen::regularPoly(verts, radius));
-    newRegPoly->centerAt(cursorPoly.getCenter());
-    polys.push_back(newRegPoly);
+    GeometryInfo::centerAt(*newRegPoly, GeometryInfo::getCenter(cursorPoly));
+    polys->push_back(newRegPoly);
 }
 
 bool EditGroup::hoverVertex() {
     if (isVertexAt(polyHoverInd, vertHoverInd)) {
-        std::array<float, 2> vertex = polys.at(polyHoverInd)->getVertexAt(vertHoverInd);
-        vertCursor->centerAt(vertex);
+        std::array<float, 2> vertex = polys->at(polyHoverInd)->getVertexAt(vertHoverInd);
+        GeometryInfo::centerAt(*vertCursor, vertex);
         return true;
     }
     return false;
@@ -80,7 +80,7 @@ bool EditGroup::hoverPrevVertex() {
 
 bool EditGroup::shiftHoveredVertex(int axis, float offset) {
     if (isVertexAt(polyHoverInd, vertHoverInd)) {
-        if (polys.at(polyHoverInd)->shiftVertex(vertHoverInd, axis, offset)) {
+        if (polys->at(polyHoverInd)->shiftVertex(vertHoverInd, axis, offset)) {
             hoverVertex();
             return true;
         }
@@ -96,9 +96,9 @@ void EditGroup::initEditor() {
     bool redrawFlag;
 
     DrawGroup editDG = DrawGroup("Editor DrawGroup", whratio, window, ctx, color, transparency);
-    editDG.addPolygons(polys);
+    editDG.addPolygons(*polys);
 
-    if (polys.size() > 0) {
+    if (polys->size() > 0) {
         editDG.addPolygon(vertCursor);
         hoverVertex(0, 0);
     }

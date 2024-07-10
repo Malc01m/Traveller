@@ -111,16 +111,6 @@ class GridGroup : public Group {
         */
         void setYAxisAng(float yAxisAng);
 
-        /**
-         * @brief Overides Group::shift so that the grid origin will be updated and align()
-         * will continue to be correct relative to already-present polygons if moveOrigin is true
-         * 
-         * @param offset 
-         * @param axis 
-         * @param moveOrigin true if the origin of the grid alignment should be updated
-         */
-        void shift(float offset, int axis, bool moveOrigin);
-
     private:
 
         std::array<float, 2> origin = {0, 0};

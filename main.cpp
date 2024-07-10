@@ -20,6 +20,12 @@
 #include "Polygon.h"
 #include "World.h"
 #include "GeometryGen.h"
+#include "GeometryInfo.h"
+#include "ColorMutators.h"
+
+using namespace GeometryInfo;
+using namespace GeometryGen;
+using namespace ColorMutators;
 
 int main () {
 
@@ -51,39 +57,43 @@ int main () {
     int color = gsetup.getColor();
     int transparency = gsetup.getTransparency();
 
+    std::cout << "Traveller v0.0\n";
+
     // Initialize test editor
     EditGroup eg("EditGroup", whratio, window, ctx, color, transparency);
-    
-    std::string test = "World";
+
+    std::string test = "grid";
     if (test == "grid") {
 
         // Make grid
         GridGroup gg("Grid Group", 0.06, 0.06, (M_PI / 7), (M_PI * 6 / 7));
-        Polygon tile = GeometryGen::regularPoly(4, 0.027);
-        tile.scale(tile.getCenter(), 2.1, 0);
+        Polygon tile = regularPoly(4, 0.027);
+        scale(tile, getCenter(tile), 2.1, 0);
         gg.fill(tile, 0, 0, 9, 9);
-        gg.centerAt({0, 0});
+        centerAt(gg, {0, 0});
 
         eg.addGroup(gg);
 
         // Make things colorful to visually distinguish polygons
-        eg.scatterColorComponent(-0.4, 0);
-        eg.scatterColorComponent(-0.4, 1);
-        eg.scatterColorComponent(-0.4, 2);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_R);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_G);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_B);
 
     } else if (test == "trifield") {
 
-        Group triField = GeometryGen::triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
+        Group triField = triFieldRadial(2, 3, 0.2, 0, 0, 1.2);
         eg.addGroup(triField);
 
         // Make things colorful to visually distinguish polygons
-        eg.scatterColorComponent(-0.4, 0);
-        eg.scatterColorComponent(-0.4, 1);
-        eg.scatterColorComponent(-0.4, 2);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_R);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_G);
+        scatterColorsComponent(eg, -0.4, COLOR_DATA_B);
 
     } else if (test == "World") {
 
+        std::cout << "Launching world test...\n";
         World world = World();
+        std::cout << "World created\n";
         eg.addGroup(world.getWorldGroup());
 
     }

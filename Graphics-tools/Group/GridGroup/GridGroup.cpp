@@ -29,8 +29,9 @@ void GridGroup::addPolygon(Polygon poly, int x, int y) {
 }
 
 void GridGroup::addPolygon(std::shared_ptr<Polygon> poly, int x, int y) {
-    polys.push_back(poly);
-    coords.push_back(std::make_tuple<int, float, float>(polys.size() - 1, x, y));
+    poly->decoupleVerts();
+    polys->push_back(poly);
+    coords.push_back(std::make_tuple<int, float, float>(polys->size() - 1, x, y));
     align(poly, x, y);
 }
 
@@ -40,14 +41,14 @@ void GridGroup::align(std::shared_ptr<Polygon> poly, float x, float y) {
     std::array<float, 2> xpath = GeometryInfo::rotate({xDist, 0}, {0, 0}, xAxisAng);
     std::array<float, 2> ypath = GeometryInfo::rotate({yDist, 0}, {0, 0}, yAxisAng);
     std::array<float, 2> path = {xpath.at(0) + ypath.at(0) + origin[0], xpath.at(1) + ypath.at(1) + origin[1]}; 
-    poly->centerAt(path);
+    GeometryInfo::centerAt(*poly, path);
 }
 
 void GridGroup::alignAll() {
     for (unsigned int i = 0; i < coords.size(); i++) {
         int index = std::get<0>(coords.at(i));
-        if ((index > 0) && (index < static_cast<int>(polys.size()))) {
-            align(polys.at(index), std::get<1>(coords.at(i)), std::get<2>(coords.at(i)));
+        if ((index > 0) && (index < static_cast<int>(polys->size()))) {
+            align(polys->at(index), std::get<1>(coords.at(i)), std::get<2>(coords.at(i)));
         }
     }
 }
@@ -70,11 +71,4 @@ void GridGroup::setXAxisAng(float xAxisAng) {
 void GridGroup::setYAxisAng(float yAxisAng){
     GridGroup::yAxisAng = yAxisAng;
     alignAll();
-}
-
-void GridGroup::shift(float offset, int axis, bool moveOrigin) {
-    Group::shift(offset, axis);
-    if (moveOrigin) {
-        origin[axis] += offset;
-    }
 }

@@ -10,6 +10,7 @@ INCLUDEPATHS = \
 	-I ./Graphics-tools/Group/GridGroup \
 	-I ./Graphics-tools/Group/EditGroup \
 	-I ./Math-tools \
+	-I ./Math-tools/Color/ColorMutators \
 	-I ./Math-tools/Rand \
 	-I ./Math-tools/Geometry/GeometryGen \
 	-I ./Math-tools/Geometry/GeometryInfo \
@@ -19,7 +20,7 @@ INCLUDEPATHS = \
 
 FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
-	Rand Shader ShaderProgram source sdlglSetup StringTools World
+	ColorMutators Rand Shader ShaderProgram source sdlglSetup StringTools World
 OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
@@ -27,6 +28,10 @@ OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 compile: main.cpp $(OBJ_DEST)
 	g++ $(FLAGS) main.cpp $(OBJ_DEST) -o ./build/Traveller -lSDL2 -lGLEW -lGLU -lGL
 	./build/Traveller
+
+valgrind: main.cpp $(OBJ_DEST)
+	g++ $(FLAGS) main.cpp $(OBJ_DEST) -o ./build/Traveller -lSDL2 -lGLEW -lGLU -lGL
+	valgrind --error-limit=no --suppressions="valgrind_suppress.txt" -v ./build/Traveller
 
 #Integrators
 sdlglSetup = ./Integrators/sdlglSetup.cpp
@@ -68,6 +73,14 @@ source = ./Graphics-tools/Shader/source.cpp
 	g++ -c $(FLAGS) $(source) -o ./build/source.o
 
 #Math
+ColorMutators = ./Math-tools/Color/ColorMutators/ColorMutators.cpp
+./build/ColorMutators.o: $(ColorMutators)
+	g++ -c $(FLAGS) $(ColorMutators) -o ./build/ColorMutators.o
+
+Rand = ./Math-tools/Rand/Rand.cpp
+./build/Rand.o: $(Rand)
+	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
+
 GeometryGen = ./Math-tools/Geometry/GeometryGen/GeometryGen.cpp
 ./build/GeometryGen.o: $(GeometryGen) ./build/Rand.o ./build/Polygon.o ./build/GeometryInfo.o ./build/Group.o
 	g++ -c $(FLAGS) $(GeometryGen) -o ./build/GeometryGen.o
@@ -79,10 +92,6 @@ GeometryInfo = ./Math-tools/Geometry/GeometryInfo/GeometryInfo.cpp
 Polygon = ./Math-tools/Geometry/Polygon/Polygon.cpp
 ./build/Polygon.o: $(Polygon) ./build/GeometryInfo.o
 	g++ -c $(FLAGS) $(Polygon) -o ./build/Polygon.o
-
-Rand = ./Math-tools/Rand/Rand.cpp
-./build/Rand.o: $(Rand)
-	g++ -c $(FLAGS) $(Rand) -o ./build/Rand.o
 
 # Data
 StringTools = ./Data-tools/StringTools/StringTools.cpp
@@ -97,4 +106,3 @@ World = ./World-tools/World/World.cpp
 # Clean
 clean:
 	rm ./build/*
-	rmdir ./build
