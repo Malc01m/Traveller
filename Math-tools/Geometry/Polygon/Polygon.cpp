@@ -108,6 +108,10 @@ void Polygon::shiftColorLightness(float shift) {
     color->at(2) += shift;
 }
 
+void Polygon::decoupleColor() {
+    color = std::make_shared<Color>(*color);
+}
+
 void Polygon::printStatus() {
     std::vector<std::string> polyStat = getStatus();
     for (unsigned int i = 0; i < polyStat.size(); i++) {

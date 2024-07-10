@@ -41,6 +41,7 @@ void Group::addPolygon(std::shared_ptr<Polygon> poly) {
 
 void Group::addPolygon(Polygon poly) {
     poly.decoupleVerts();
+    poly.decoupleColor();
     polys->push_back(std::make_shared<Polygon>(poly));
 }
 

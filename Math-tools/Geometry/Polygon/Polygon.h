@@ -164,6 +164,8 @@ class Polygon {
          */
         void shiftColorLightness(float shift);
 
+        void decoupleColor();
+
         //Debug
 
         void printStatus();

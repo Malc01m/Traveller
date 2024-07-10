@@ -39,10 +39,8 @@ Color ColorMutators::scatterColorComponent(Color color, float maxChange, ColorAr
 
 void ColorMutators::scatterColorsComponent(ColorsPtr colors, float maxChange, ColorArrIndex component) {
     for (unsigned int i = 0; i < colors->size(); i++) {
-        Color thisColor = *colors->at(i);
-        thisColor = scatterColorComponent(thisColor, maxChange, component);
-        ColorPtr thisColorPtr = std::make_shared<Color>(thisColor);
-        colors->at(i) = thisColorPtr;
+        ColorPtr thisColor = colors->at(i);
+        *thisColor = scatterColorComponent(*thisColor, maxChange, component);
     }
 }
 

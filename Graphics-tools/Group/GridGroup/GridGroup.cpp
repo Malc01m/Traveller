@@ -30,6 +30,7 @@ void GridGroup::addPolygon(Polygon poly, int x, int y) {
 
 void GridGroup::addPolygon(std::shared_ptr<Polygon> poly, int x, int y) {
     poly->decoupleVerts();
+    poly->decoupleColor();
     polys->push_back(poly);
     coords.push_back(std::make_tuple<int, float, float>(polys->size() - 1, x, y));
     align(poly, x, y);
