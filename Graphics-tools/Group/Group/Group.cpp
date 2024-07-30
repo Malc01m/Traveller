@@ -47,6 +47,8 @@ void Group::addPolygon(Polygon poly) {
 
 void Group::addPolygons(std::vector<Polygon> polys) {
     for (unsigned int i = 0; i < polys.size(); i++) {
+        polys.at(i).decoupleVerts();
+        polys.at(i).decoupleColor();
         Group::polys->push_back(std::make_shared<Polygon>(polys.at(i)));
     }
 }

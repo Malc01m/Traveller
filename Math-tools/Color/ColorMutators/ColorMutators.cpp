@@ -52,9 +52,7 @@ Color ColorMutators::scatterColorLightness(Color color, float maxChange) {
 
 void ColorMutators::scatterColorsLightness(ColorsPtr colors, float maxChange) {
     for (unsigned int i = 0; i < colors->size(); i++) {
-        Color thisColor = *colors->at(i);
-        thisColor = scatterColorLightness(thisColor, maxChange);
-        ColorPtr thisColorPtr = std::make_shared<Color>(thisColor);
-        colors->at(i) = thisColorPtr;
+        ColorPtr thisColor = colors->at(i);
+        *thisColor = scatterColorLightness(*thisColor, maxChange);
     }
 }
