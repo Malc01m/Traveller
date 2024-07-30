@@ -7,21 +7,23 @@
 #include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
 
-#include "sdlglSetup.h"
-#include "glewSetup.cpp"
+#include "Integrators/sdlglSetup.h"
+#include "Integrators/glewSetup.cpp"
 
-#include "ShaderProgram.h"
-#include "source.cpp"
+#include "Graphics-tools/Shader/ShaderProgram.h"
+#include "Graphics-tools/Shader/source.cpp"
 
-#include "Group.h"
-#include "DrawGroup.h"
-#include "GridGroup.h"
-#include "EditGroup.h"
-#include "Polygon.h"
-#include "World.h"
-#include "GeometryGen.h"
-#include "GeometryInfo.h"
-#include "ColorMutators.h"
+#include "Graphics-tools/Group/Group/Group.h"
+#include "Graphics-tools/Group/DrawGroup/DrawGroup.h"
+#include "Graphics-tools/Group/EditGroup/EditGroup.h"
+#include "Graphics-tools/Group/GridGroup/GridGroup.h"
+
+#include "Math-tools/Geometry/Polygon/Polygon.h"
+#include "Math-tools/Geometry/GeometryGen/GeometryGen.h"
+#include "Math-tools/Geometry/GeometryInfo/GeometryInfo.h"
+#include "Math-tools/Color/ColorMutators/ColorMutators.h"
+
+#include "World-tools/World/World.h"
 
 using namespace GeometryInfo;
 using namespace GeometryGen;

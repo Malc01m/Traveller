@@ -16,6 +16,11 @@ Group World::getWorldGroup() {
     return worldGroup;
 }
 
+void World::addActor(Actor actor) {
+    actors.push_back(actor);
+    worldGroup.addGroup(actor.getGroup());
+}
+
 Group World::genTerrain() {
     Group terrain = GeometryGen::triTiles(0.1, 20, 20, 0.05);
     centerAt(terrain, {0, 0});

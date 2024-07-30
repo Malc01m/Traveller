@@ -16,11 +16,14 @@ INCLUDEPATHS = \
 	-I ./Math-tools/Geometry/GeometryInfo \
 	-I ./Math-tools/Geometry/Polygon \
 	-I ./Data-tools/StringTools \
-	-I ./World-tools/World
+	-I ./World-tools/World \
+	-I ./World-tools/Actor \
+	-I ./World-tools/Flora
 
 FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
-	ColorMutators Rand Shader ShaderProgram source sdlglSetup StringTools World
+	ColorMutators Rand Shader ShaderProgram source sdlglSetup StringTools World \
+	Actor Flora
 OBJECTS = $(addsuffix .o, $(CLASSES))
 OBJ_DEST = $(addprefix ./build/, $(OBJECTS))
 
@@ -102,6 +105,14 @@ StringTools = ./Data-tools/StringTools/StringTools.cpp
 World = ./World-tools/World/World.cpp
 ./build/World.o: $(World)
 	g++ -c $(FLAGS) $(World) -o ./build/World.o
+
+Actor = ./World-tools/Actor/Actor.cpp
+./build/Actor.o: $(Actor)
+	g++ -c $(FLAGS) $(Actor) -o ./build/Actor.o
+
+Flora = ./World-tools/Flora/Flora.cpp
+./build/Flora.o: $(Flora)
+	g++ -c $(FLAGS) $(Flora) -o ./build/Flora.o
 
 # Clean
 clean:

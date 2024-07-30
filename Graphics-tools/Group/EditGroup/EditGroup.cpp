@@ -140,8 +140,26 @@ void EditGroup::initEditor() {
                         shiftHoveredVertex(1, 0.01);
                         redrawFlag = true;
                     }
-                }
 
+                    // Move group
+                    if (event.key.keysym.sym == SDLK_LEFT) {
+                        GeometryInfo::shift(*this, 0.01, 0);
+                        redrawFlag = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_DOWN) {
+                        GeometryInfo::shift(*this, 0.01, 1);
+                        redrawFlag = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_RIGHT) {
+                        GeometryInfo::shift(*this, -0.01, 0);
+                        redrawFlag = true;
+                    }
+                    if (event.key.keysym.sym == SDLK_UP) {
+                        GeometryInfo::shift(*this, -0.01, 1);
+                        redrawFlag = true;
+                    }
+                }
+                
                 //Cycle vertices
                 if (event.key.keysym.sym == SDLK_e) {
                     hoverNextVertex();
