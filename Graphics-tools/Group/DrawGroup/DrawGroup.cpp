@@ -34,11 +34,7 @@ void DrawGroup::draw() {
             glBufferData(GL_ARRAY_BUFFER, verts.size() * 2 * sizeof(verts[0][0]), verts.data(), GL_DYNAMIC_DRAW);
 
             //Set colors
-            float r = poly->getColor()[0];
-            float g = poly->getColor()[1];
-            float b = poly->getColor()[2];
-            float t = poly->getColor()[3];
-            glUniform4f(color, r, g, b, t);
+            glUniform4fv(color, 1, poly->getColor().data());
             
             glDrawArrays(GL_TRIANGLE_STRIP, 0, verts.size());
         }
