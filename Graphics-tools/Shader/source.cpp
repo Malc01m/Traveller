@@ -16,13 +16,11 @@ namespace shadersrc {
 
                         #version 150 core
 
-                        uniform vec3 color;
-                        uniform float transparency;
-
+                        uniform vec4 color;
                         out vec4 outColor;
 
                         void main() {
-                            outColor = vec4(color, transparency);
+                            outColor = color;
                         }
 
                         )glsl";

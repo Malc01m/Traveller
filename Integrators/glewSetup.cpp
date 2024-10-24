@@ -16,9 +16,6 @@ class glewSetup {
 
         void setupGL(GLint shaderProgram) {
             color = glGetUniformLocation(shaderProgram, "color");
-            if (transparencyOn) {
-                transparency = glGetUniformLocation(shaderProgram, "transparency");
-            }
             pos = glGetAttribLocation(shaderProgram, "position");
 
             glGenVertexArrays(1, &vao);
@@ -27,27 +24,18 @@ class glewSetup {
             glBindBuffer(GL_ARRAY_BUFFER, vbo);
             glEnableVertexAttribArray(pos);
             glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        }
 
-        void enableTransparency() {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable( GL_BLEND );
-            transparencyOn = true;
         }
 
         GLint getColor() {
             return color;
         }
 
-        GLint getTransparency() {
-            return transparency;
-        }
-        
     private:
-        bool transparencyOn = false;
         GLuint vbo = 0;
         GLuint vao = 0;
         GLint color = 0;
-        GLint transparency = 0;
         GLint pos = 0;
 };

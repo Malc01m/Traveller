@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include "GeometryGen.h"
+#include "GeometryInfo.h"
 #include "Group.h"
 #include "DrawGroup.h"
 
@@ -15,7 +16,7 @@ class EditGroup : public Group {
     public:
 
         EditGroup(std::string name, float whratio, SDL_Window *window, 
-            std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency);
+            std::shared_ptr<SDL_GLContext> ctx, GLint color);
 
         ///////////////////
         // Editor State //
@@ -111,7 +112,6 @@ class EditGroup : public Group {
 
         // DrawGroup information (for DrawGroup construction in initEditor)
         GLint color = 0;
-        GLint transparency = 0;
         float whratio;
         SDL_Window *window = nullptr;
         std::shared_ptr<SDL_GLContext> ctx = nullptr;

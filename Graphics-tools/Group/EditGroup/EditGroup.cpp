@@ -1,21 +1,17 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
-#ifdef DEBUG
-    #include <chrono>
-#endif
+#include <chrono>
 
 #include "EditGroup.h"
-#include "GeometryInfo.h"
 
 //Constructor
 EditGroup::EditGroup(std::string name, float whratio, SDL_Window *window, 
-        std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency) : Group(name) {
+        std::shared_ptr<SDL_GLContext> ctx, GLint color) : Group(name) {
     EditGroup::whratio = whratio;
     EditGroup::window = window;
     EditGroup::ctx = ctx;
     EditGroup::color = color;
-    EditGroup::transparency = transparency;
 
     vertCursor->setColor({1.0, 0.0, 0.0, 1.0});
     vertCursor->setName("Vertex cursor");
@@ -95,7 +91,7 @@ void EditGroup::initEditor() {
     SDL_Event event;
     bool redrawFlag;
 
-    DrawGroup editDG = DrawGroup("Editor DrawGroup", whratio, window, ctx, color, transparency);
+    DrawGroup editDG = DrawGroup("Editor DrawGroup", whratio, window, ctx, color);
     editDG.addPolygons(*polys);
 
     if (polys->size() > 0) {
@@ -193,17 +189,34 @@ void EditGroup::initEditor() {
             if (keyStates[SDL_SCANCODE_A]) {
                 shiftHoveredVertex(0, -0.01);
                 redrawFlag = true;
-            }
-            if (keyStates[SDL_SCANCODE_S]) {
+            } else if (keyStates[SDL_SCANCODE_S]) {
                 shiftHoveredVertex(1, -0.01);
                 redrawFlag = true;
-            }
-            if (keyStates[SDL_SCANCODE_D]) {
+            } else if (keyStates[SDL_SCANCODE_D]) {
                 shiftHoveredVertex(0, 0.01);
                 redrawFlag = true;
-            }
-            if (keyStates[SDL_SCANCODE_W]) {
+            } else if (keyStates[SDL_SCANCODE_W]) {
                 shiftHoveredVertex(1, 0.01);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_PAGEUP]) {
+                GeometryInfo::scale(*this, {0, 0}, 0.9, 0);
+                GeometryInfo::scale(*this, {0, 0}, 0.9, 1);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_PAGEDOWN]) {
+                GeometryInfo::scale(*this, {0, 0}, -0.9, 0);
+                GeometryInfo::scale(*this, {0, 0}, -0.9, 1);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_LEFT]) {
+                GeometryInfo::shift(*this, 0.01, 0);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_DOWN]) {
+                GeometryInfo::shift(*this, 0.01, 1);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_RIGHT]) {
+                GeometryInfo::shift(*this, -0.01, 0);
+                redrawFlag = true;
+            } else if (keyStates[SDL_SCANCODE_UP]) {
+                GeometryInfo::shift(*this, -0.01, 1);
                 redrawFlag = true;
             }
         }

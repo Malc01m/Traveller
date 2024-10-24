@@ -20,7 +20,7 @@ INCLUDEPATHS = \
 	-I ./World-tools/Actor \
 	-I ./World-tools/Flora
 
-FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic -DDEBUG=1
+FLAGS = $(INCLUDEPATHS) -Wall -Wextra -Wpedantic
 CLASSES = Polygon Group DrawGroup EditGroup GridGroup GeometryGen GeometryInfo \
 	ColorMutators Rand Shader ShaderProgram source sdlglSetup StringTools World \
 	Actor Flora

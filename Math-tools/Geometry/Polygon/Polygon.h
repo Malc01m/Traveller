@@ -123,7 +123,8 @@ class Polygon {
         void addVertex(Point vert);
 
         /**
-         * @brief Creates new shared pointers for all vertices
+         * @brief Creates new shared pointers to vertex data 
+         * for all vertices
          */
         void decoupleVerts();
 

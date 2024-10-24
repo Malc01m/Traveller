@@ -12,7 +12,7 @@ class DrawGroup : public Group {
 
     public:
 
-        DrawGroup(std::string name, float whratio, SDL_Window *window, std::shared_ptr<SDL_GLContext> ctx, GLint color, GLint transparency);
+        DrawGroup(std::string name, float whratio, SDL_Window *window, std::shared_ptr<SDL_GLContext> ctx, GLint color);
         
         /**
          * @brief Clears the screen
@@ -24,28 +24,6 @@ class DrawGroup : public Group {
         */
         void draw();
 
-        // Panning
-
-        /**
-         * @brief Returns the distance the image is panned on an axis
-        */
-        float getPan(int axis);
-    
-        /**
-         * @brief Returns the distance the image is panned on both axes
-        */
-        std::array<float, 2> getPan();
-
-        /**
-         * @brief Sets the distance the image is panned on an axis
-        */
-        void setPan(float pan, int axis);
-
-        /**
-         * @brief Sets the distance the image is panned on both axes 
-        */
-        void setPan(std::array<float, 2> pan);
-
     private:
 
         GLint color = 0;
@@ -56,8 +34,14 @@ class DrawGroup : public Group {
         SDL_Window *window = nullptr;
         std::shared_ptr<SDL_GLContext> ctx = nullptr;
 
-        float panX = 0.0;
-        float panY = 0.0;
+        /* Vectors are guaranteed to be contigious past C++98,
+        so we can speed up rendering by putting all of our vertices 
+        in here and accessing it as a c-style array. */
+        std::vector<float> vba;
+
+        /* Track poly location in vba by adding its index in the vba
+        at the same index as it is located at in polys here. */
+        std::vector<int> polyMap;
 
 };
 

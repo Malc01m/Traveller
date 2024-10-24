@@ -50,19 +50,17 @@ int main () {
     sp.add(Shader(shadersrc::vertsrc, GL_VERTEX_SHADER));
     sp.add(Shader(shadersrc::fragsrc, GL_FRAGMENT_SHADER));
 
-    gsetup.enableTransparency();
     gsetup.setupGL(sp.compile());
 
     float whratio = setup.getScreenRatio();
     SDL_Window* window = setup.getWindow();
     std::shared_ptr<SDL_GLContext> ctx = setup.getGLContext();
     int color = gsetup.getColor();
-    int transparency = gsetup.getTransparency();
 
     std::cout << "Traveller v0.0\n";
 
     // Initialize test editor
-    EditGroup eg("EditGroup", whratio, window, ctx, color, transparency);
+    EditGroup eg("EditGroup", whratio, window, ctx, color);
 
     std::string test = "World";
     if (test == "grid") {
