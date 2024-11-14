@@ -40,6 +40,7 @@ Polygon GeometryGen::regularPoly(int verts, float radius) {
 Group GeometryGen::wheel(int numVerts, float radius, float ang, float radScatter, float angScatter) {
     Point center = {0, 0};
     Group wheel("wheel");
+    
     PointsPtr armVect = 
         GeometryInfo::radial(numVerts, radius, ang, radScatter, angScatter);
 

@@ -12,6 +12,7 @@ class World {
 
         // Generation
         Group genTerrain();
+        Group genRocks();
 
         Group worldGroup;
         std::vector<Actor> actors = std::vector<Actor>();

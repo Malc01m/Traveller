@@ -218,8 +218,11 @@ PointsPtr GeometryInfo::radial(int numArms, float dist, float ang, float distSca
     float thisDist = Rand::randFloatBetween(minDist, maxDist);
 
     Point arm = GeometryInfo::shift(center, thisDist, thisAng);
-    PointsPtr armVect;
-    armVect->push_back(std::make_shared<Point>(arm));
+    PointsPtr armVect = std::make_shared<std::vector<std::shared_ptr<Point>>>(
+        std::vector<std::shared_ptr<Point>>()
+    );
+    std::shared_ptr<Point> armptr = std::make_shared<Point>(arm);
+    armVect->push_back(armptr);
 
     for (int i = 1; i < numArms; i++) {
         thisAng = thisAng + Rand::randFloatBetween(minAng, maxAng);
